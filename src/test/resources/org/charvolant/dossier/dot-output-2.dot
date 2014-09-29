@@ -1,0 +1,67 @@
+
+digraph "test2" {
+  ranksep="1.0 equally";
+  rankdir="LR";
+  concentrate=true;
+
+  
+  node 
+  [label="test2",tooltip="test2",URL="http://localhost/dot/test2",fontname="sans-serif",fontsize="10.0"]
+  ;
+  edge 
+  [label="test2",tooltip="test2",URL="http://localhost/dot/test2",fontname="sans-serif",fontsize="10.0"]
+  ;
+
+  subgraph main {
+  
+  label="test2";
+  tooltip="http://localhost/dot/test2";
+  bgcolor="#f0f0f8";fontname="sans-serif";fontsize="8.0";
+    "A" 
+  [label="A",tooltip="Class A",URL="http://localhost/dot/test2#A",color="#c0d2ff",shape="box",style="rounded,filled"]
+  ;
+    
+    "B" 
+  [label="B",tooltip="Class B",URL="http://localhost/dot/test2#B",color="#c0d2ff",shape="box",style="rounded,filled"]
+  ;
+    
+    "C" 
+  [label="C",tooltip="Class C",URL="http://localhost/dot/test2#C",color="#c0d2ff",shape="box",style="rounded,filled"]
+  ;
+    
+    "B" -> "C" 
+  [label="",tooltip="",dir="back",arrowhead="onormal",arrowtail="onormal",color="#306098"]
+  ;
+      
+    "property1"  
+  [label="property1",tooltip="property 1",URL="http://localhost/dot/test2#property1",color="#6830d0",shape="none"]
+  ;
+    
+    "C" -> "property1" 
+  [label="",tooltip="C → property1",URL="http://localhost/dot/test2#property1",arrowhead="none",headclip="false",color="#6830d0",weight="5"]
+  ;
+  
+    "property1" -> "A" 
+  [label="",tooltip="property1 → A",URL="http://localhost/dot/test2#property1",arrowhead="vee",arrowtail="none",tailclip="false",color="#6830d0",weight="5"]
+  ;
+  
+    "property2"  
+  [label="property2",tooltip="property 2",URL="http://localhost/dot/test2#property2",color="#6830d0",shape="none"]
+  ;
+    
+    "C" -> "property2" 
+  [label="",tooltip="C → property2",URL="http://localhost/dot/test2#property2",arrowhead="none",headclip="false",color="#6830d0",weight="5"]
+  ;
+  
+    "property2" -> "A" 
+  [label="",tooltip="property2 → A",URL="http://localhost/dot/test2#property2",arrowhead="vee",arrowtail="none",tailclip="false",color="#6830d0",weight="5"]
+  ;
+  
+    "property2" -> "B" 
+  [label="",tooltip="property2 → B",URL="http://localhost/dot/test2#property2",arrowhead="vee",arrowtail="none",tailclip="false",color="#6830d0",weight="5"]
+  ;
+  
+  }
+    
+}
+ 

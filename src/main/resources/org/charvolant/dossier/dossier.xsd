@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.charvolant.org/dossier#"
+  xmlns:dossier="http://www.charvolant.org/dossier#" elementFormDefault="qualified">
+  <include schemaLocation=""></include>
+  <annotation>
+    <documentation>An intermediate XML representation of an ontology,
+      suitable for converting into documentation.</documentation>
+  </annotation>
+
+
+
+  <attribute name="lang" type="string">
+    <annotation>
+      <documentation>The language of a piece of documentation
+      </documentation>
+    </annotation>
+  </attribute>
+
+
+
+  <complexType name="descriptiveType">
+    <annotation>
+      <documentation>A piece of descriptive text. Attributes give
+        additional information as to the nature of the text.
+      </documentation>
+    </annotation>
+    <simpleContent>
+      <extension base="string">
+        <attribute ref="dossier:lang"></attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <element name="label" type="dossier:descriptiveType">
+    <annotation>
+      <documentation>The label of a class, property, etc.
+      </documentation>
+    </annotation>
+  </element>
+
+  <element name="description" type="dossier:descriptiveType">
+    <annotation>
+      <documentation>A long description of a class, property etc.
+      </documentation>
+    </annotation>
+  </element>
+
+  <element name="ontology" type="dossier:ontologyType"></element>
+
+  <complexType name="resourceType">
+    <annotation>
+      <documentation>
+        The base class for describing resources, such as classes,
+        properties, etc.
+      </documentation>
+    </annotation>
+    <sequence>
+      <element ref="dossier:label" maxOccurs="unbounded"
+        minOccurs="1">
+      </element>
+      <element ref="dossier:description" maxOccurs="unbounded"
+        minOccurs="0">
+      </element>
+      <element name="definition" type="dossier:referenceType"
+        maxOccurs="unbounded" minOccurs="0">
+        <annotation>
+          <documentation>
+            References to definitional documents
+          </documentation>
+        </annotation>
+      </element>
+      <element ref="dossier:metadata" maxOccurs="1" minOccurs="0"></element>
+      <element type="dossier:classifierType" name="classifier"
+        maxOccurs="unbounded" minOccurs="0">
+      </element>
+      <element ref="dossier:style" maxOccurs="unbounded"
+        minOccurs="0">
+      </element>
+    </sequence>
+    <attribute name="id" type="ID" use="required">
+      <annotation>
+        <documentation>
+          An ID so that references to the resource can be made within
+          the document
+        </documentation>
+      </annotation>
+    </attribute>
+    <attribute ref="dossier:uri"></attribute>
+    <attribute ref="dossier:name"></attribute>
+    <attribute name="deprecated" type="boolean">
+      <annotation>
+        <documentation>
+          Has this resource been deprecated?
+        </documentation>
+      </annotation>
+    </attribute>
+    <attribute name="href" type="anyURI"></attribute>
+  </complexType>
+
+  <attribute name="uri" type="anyURI">
+    <annotation>
+      <documentation>The defining URI of a resource</documentation>
+    </annotation>
+  </attribute>
+
+
+  <attribute name="name" type="string">
+    <annotation>
+      <documentation>A human-readable name for a resource. This is
+        usually prefix:localName for a resource.</documentation>
+    </annotation>
+  </attribute>
+
+  <complexType name="classType">
+    <annotation>
+      <documentation>A class description</documentation>
+    </annotation>
+    <complexContent>
+      <extension base="dossier:resourceType">
+        <sequence>
+          <element name="sub-class-of" type="IDREF" maxOccurs="unbounded"
+            minOccurs="0">
+            <annotation>
+              <documentation>
+                Class hierarchy references
+              </documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="propertyType">
+    <annotation>
+      <documentation>A property description</documentation>
+    </annotation>
+    <complexContent>
+      <extension base="dossier:resourceType">
+        <sequence>
+          <element name="sub-property-of" type="IDREF"
+            maxOccurs="unbounded" minOccurs="0">
+            <annotation>
+              <documentation>
+                Property hierarchy references
+              </documentation>
+            </annotation>
+          </element>
+          <element name="domain" type="dossier:extentType"></element>
+          <element name="range" type="dossier:extentType"></element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="ontologyType">
+    <complexContent>
+      <extension base="dossier:resourceType">
+        <sequence>
+          <element name="version" type="anyURI" maxOccurs="1"
+            minOccurs="0">
+          </element>
+          <element name="prior-version" type="anyURI" maxOccurs="1"
+            minOccurs="0">
+          </element>
+          <element name="backward-compatible-with" type="anyURI"
+            maxOccurs="unbounded" minOccurs="0">
+          </element>
+          <element name="incompatible-with" type="anyURI"
+            maxOccurs="unbounded" minOccurs="0">
+          </element>
+          <element name="imports" type="anyURI" maxOccurs="unbounded"
+            minOccurs="0">
+          </element>
+          <element name="diagram" type="dossier:referenceType"
+            maxOccurs="unbounded" minOccurs="0">
+          </element>
+          <element ref="dossier:class" minOccurs="0"
+            maxOccurs="unbounded">
+          </element>
+          <element ref="dossier:property" maxOccurs="unbounded"
+            minOccurs="0">
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="class" type="dossier:classType"></element>
+
+  <element name="property" type="dossier:propertyType"></element>
+
+  <complexType name="extentType">
+    <annotation>
+      <documentation>
+        A description of the domain or range of a property.
+      </documentation>
+    </annotation>
+    <sequence>
+      <element ref="dossier:extent"></element>
+    </sequence>
+  </complexType>
+  
+  <element name="extent"></element>
+
+  <element name="class-ref" type="dossier:referenceType"
+    substitutionGroup="dossier:extent">
+  </element>
+
+  <element name="union" substitutionGroup="dossier:extent">
+    <complexType>
+      <sequence>
+        <element ref="dossier:extent" maxOccurs="unbounded" minOccurs="1"></element>
+      </sequence>
+    </complexType>
+  </element>
+
+  <element name="intersection" substitutionGroup="dossier:extent">
+    <complexType>
+      <sequence>
+        <element ref="dossier:extent" maxOccurs="unbounded" minOccurs="1"></element>
+      </sequence>
+    </complexType>
+  </element>
+
+  <element name="complement" substitutionGroup="dossier:extent">
+    <complexType>
+      <sequence>
+        <element ref="dossier:extent" maxOccurs="1" minOccurs="1"></element>
+      </sequence>
+    </complexType>
+  </element>
+
+  <element name="one-of" substitutionGroup="dossier:extent">
+    <complexType>
+      <sequence>
+        <choice maxOccurs="unbounded" minOccurs="1">
+          <element ref="dossier:literal"></element>
+        </choice>
+      </sequence>
+    </complexType>
+  </element>
+
+  <complexType name="referenceType">
+    <annotation>
+      <documentation>
+        A reference to to something either in the document or
+        externally. If internal, the ref is set, otherwise the URI and
+        name.
+      </documentation>
+    </annotation>
+    <attribute name="ref" type="IDREF"></attribute>
+    <attribute name="href" type="anyURI"></attribute>
+    <attribute ref="dossier:uri"></attribute>
+    <attribute ref="dossier:name"></attribute>
+  </complexType>
+
+  <element name="sub-class-of" type="dossier:referenceType"></element>
+
+  <element name="sub-property-of" type="dossier:referenceType"></element>
+
+  <element name="literal" type="string"></element>
+
+  <complexType name="metadataType">
+        <annotation>
+          <documentation>A list of metadata terms associated with an element.</documentation>
+        </annotation>
+        <sequence>
+      <element name="term" maxOccurs="unbounded" minOccurs="1">
+        <complexType>
+          <attribute name="term" type="string" use="required"></attribute>
+          <attribute name="value" type="string" use="required"></attribute>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+
+  <element name="metadata" type="dossier:metadataType"></element>
+
+  <complexType name="styleType">
+    <annotation>
+      <documentation>
+        A list of styling terms associated with an element.
+      </documentation>
+    </annotation>
+    <sequence>
+      <element name="attribute" maxOccurs="unbounded" minOccurs="1">
+        <complexType>
+          <attribute name="style" type="string" use="required"></attribute>
+          <attribute name="value" type="string" use="required"></attribute>
+        </complexType>
+      </element>
+    </sequence>
+    <attribute name="family" type="dossier:styleFamilyType"></attribute>
+    <attribute name="showLabel" type="boolean"></attribute>
+    <attribute name="reverseHierarchy" type="boolean"></attribute>
+  </complexType>
+
+  <element name="style" type="dossier:styleType"></element>
+
+  <simpleType name="classifierType">
+        <annotation>
+          <documentation>Additional classifers from a controlled vocabulary that describe classes and properties.</documentation>
+        </annotation>
+        <restriction base="string">
+      <enumeration value="datatype"></enumeration>
+      <enumeration value="annotation"></enumeration>
+      <enumeration value="deprecated"></enumeration>
+      <enumeration value="functional"></enumeration>
+      <enumeration value="asymmetric"></enumeration>
+      <enumeration value="inverse-functional"></enumeration>
+      <enumeration value="irreflexive"></enumeration>
+      <enumeration value="reflexive"></enumeration>
+      <enumeration value="symmetric"></enumeration>
+      <enumeration value="transitive"></enumeration>
+    </restriction>
+  </simpleType>
+  
+    <simpleType name="styleFamilyType">
+        <annotation>
+          <documentation>The purpose behind some style information.</documentation>
+        </annotation>
+    <restriction base="string">
+      <enumeration value="graphviz-node"></enumeration>
+      <enumeration value="graphviz-node-anonymous"></enumeration>
+      <enumeration value="graphviz-edge"></enumeration>
+      <enumeration value="graphviz-edge-incoming"></enumeration>
+      <enumeration value="graphviz-edge-outgoing"></enumeration>
+      <enumeration value="graphviz-edge-super-class"></enumeration>
+      <enumeration value="graphviz-egde-super-property"></enumeration>
+      <enumeration value="graphviz-graph"></enumeration>
+      <enumeration value="html"></enumeration>
+    </restriction>
+  </simpleType>
+  
+</schema>

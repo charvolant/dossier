@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://localhost/prefs#"
+    xmlns:dossier="http://www.charvolant.org/dossier#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xml:base="http://localhost/prefs">
+  <owl:Ontology rdf:about="">
+    <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Created with TopBraid Composer</owl:versionInfo>
+    <owl:imports rdf:resource="http://www.charvolant.org/dossier"/>
+  </owl:Ontology>
+  <owl:Class rdf:ID="B">
+    <dossier:nodeShape rdf:resource="http://www.charvolant.org/dossier/node-shape/ellipse"/>
+    <rdfs:comment xml:lang="en">Test class B</rdfs:comment>
+    <rdfs:label xml:lang="en">B </rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="A"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="C">
+    <dossier:arrowHead rdf:resource="http://www.charvolant.org/dossier/arrow-type/normal"/>
+    <rdfs:label xml:lang="en">C</rdfs:label>
+    <rdfs:subClassOf>
+      <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing">
+        <dossier:nodeShape rdf:resource="http://www.charvolant.org/dossier/node-shape/circle"/>
+      </rdf:Description>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">Test class C</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="D">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#A"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="en">display preferences</rdfs:label>
+    <rdfs:comment xml:lang="en">A reference to a common set of display preferences </rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#C"/>
+  </owl:Class>
+  <owl:Class rdf:ID="E">
+    <dossier:displayPreferences>
+      <dossier:DisplayPreferences rdf:ID="dp1">
+        <dossier:nodeShape rdf:resource="http://www.charvolant.org/dossier/node-shape/polygon"/>
+        <dossier:arrowTail rdf:resource="http://www.charvolant.org/dossier/arrow-type/none"/>
+        <dossier:arrowHead rdf:resource="http://www.charvolant.org/dossier/arrow-type/normal"/>
+        <rdfs:comment xml:lang="en">Test preference set 1 </rdfs:comment>
+      </dossier:DisplayPreferences>
+    </dossier:displayPreferences>
+    <rdfs:label xml:lang="en">E</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:comment xml:lang="en">Test class E</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="F">
+    <dossier:arrowTail rdf:resource="http://www.charvolant.org/dossier/arrow-type/inverted"/>
+    <dossier:displayPreferences rdf:resource="#dp1"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:label xml:lang="en">F</rdfs:label>
+    <rdfs:comment xml:lang="en">Test class F</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="#A">
+    <dossier:arrowHead rdf:resource="http://www.charvolant.org/dossier/arrow-type/inverted"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:comment xml:lang="en">Test class A</rdfs:comment>
+    <rdfs:label xml:lang="en">A </rdfs:label>
+  </owl:Class>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property">
+    <dossier:arrowHead rdf:resource="http://www.charvolant.org/dossier/arrow-type/open-normal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Class">
+    <dossier:nodeShape rdf:resource="http://www.charvolant.org/dossier/node-shape/box"/>
+  </rdf:Description>
+  <B rdf:ID="b1"/>
+  <D rdf:ID="d1">
+    <dossier:arrowTail rdf:resource="http://www.charvolant.org/dossier/arrow-type/normal"/>
+  </D>
+</rdf:RDF>
+
+<!-- Created with TopBraid -->

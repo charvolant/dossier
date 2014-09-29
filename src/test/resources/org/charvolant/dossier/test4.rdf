@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://localhost/dot/test4#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xml:base="http://localhost/dot/test4">
+  <owl:Ontology rdf:about="">
+    <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Created with TopBraid Composer</owl:versionInfo>
+  </owl:Ontology>
+  <owl:Class rdf:ID="B">
+    <rdfs:label xml:lang="en">Class B</rdfs:label>
+    <rdfs:comment xml:lang="en">Test class B</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="A">
+    <rdfs:label xml:lang="en">Class A</rdfs:label>
+    <rdfs:comment xml:lang="en">Test class A</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="property1">
+    <rdfs:domain rdf:resource="#A"/>
+    <rdfs:range rdf:resource="#B"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="property2">
+    <rdfs:subPropertyOf rdf:resource="#property1"/>
+  </owl:ObjectProperty>
+</rdf:RDF>
+
+<!-- Created with TopBraid -->

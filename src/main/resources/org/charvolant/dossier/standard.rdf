@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.charvolant.org/dossier/preferences/standard#"
+    xmlns:dossier="http://www.charvolant.org/dossier#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xml:base="http://www.charvolant.org/dossier/preferences/standard">
+  <owl:Ontology rdf:about="">
+    <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Created with TopBraid Composer</owl:versionInfo>
+    <owl:imports rdf:resource="http://www.charvolant.org/dossier"/>
+    <dossier:nodeShape rdf:resource="http://www.charvolant.org/dossier/node-shape/box"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The default representation of an ontology</rdfs:comment>
+  </owl:Ontology>
+  <rdf:Description rdf:about="http://www.charvolant.org/dossier#dataRange">
+    <dossier:color>
+      <dossier:RGBColor rdf:about="http://www.charvolant.org/dossier/standard/colours/datatype-colour">
+        <dossier:green rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >C0</dossier:green>
+        <rdfs:label xml:lang="en">datatype colour</rdfs:label>
+        <dossier:blue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >00</dossier:blue>
+        <rdfs:comment xml:lang="en">A colour used to represent RDF datatypes and datatype properties</rdfs:comment>
+        <dossier:red rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >00</dossier:red>
+      </dossier:RGBColor>
+    </dossier:color>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#DatatypeProperty">
+    <dossier:isConstraint rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</dossier:isConstraint>
+    <dossier:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >0</dossier:weight>
+    <dossier:color rdf:resource="http://www.charvolant.org/dossier/standard/colours/datatype-colour"/>
+    <dossier:priority rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >80</dossier:priority>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Resource">
+    <dossier:fontSize rdf:datatype="http://www.w3.org/2001/XMLSchema#double"
+    >10.0</dossier:fontSize>
+    <dossier:fontName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sans-serif</dossier:fontName>
+    <dossier:priority rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >-100</dossier:priority>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Class">
+    <dossier:nodeStyle rdf:resource="http://www.charvolant.org/dossier/node-style/bold"/>
+    <dossier:nodeStyle rdf:resource="http://www.charvolant.org/dossier/node-style/filled"/>
+    <dossier:nodeStyle rdf:resource="http://www.charvolant.org/dossier/node-style/rounded-corners"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property">
+    <dossier:isConstraint rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</dossier:isConstraint>
+    <dossier:extendPropertyEdge rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</dossier:extendPropertyEdge>
+    <dossier:priority rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >40</dossier:priority>
+    <dossier:color>
+      <dossier:RGBColor rdf:about="http://www.charvolant.org/dossier/standard/colours/property-colour">
+        <dossier:red rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >68</dossier:red>
+        <dossier:blue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >D0</dossier:blue>
+        <dossier:green rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >30</dossier:green>
+        <rdfs:label xml:lang="en">property colour</rdfs:label>
+        <rdfs:comment xml:lang="en">A colour used to represent generic properties</rdfs:comment>
+      </dossier:RGBColor>
+    </dossier:color>
+    <dossier:arrowHead rdf:resource="http://www.charvolant.org/dossier/arrow-type/vee"/>
+    <dossier:nodeShape rdf:resource="http://www.charvolant.org/dossier/node-shape/none"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#DeprecatedProperty">
+    <dossier:priority rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >100</dossier:priority>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#AnnotationProperty">
+    <dossier:color>
+      <dossier:RGBColor rdf:about="http://www.charvolant.org/dossier/standard/colours/annotation-colour">
+        <rdfs:comment xml:lang="en">A colour used to represent annotation properties</rdfs:comment>
+        <dossier:red rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >96</dossier:red>
+        <dossier:green rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >96</dossier:green>
+        <rdfs:label xml:lang="en">property colour</rdfs:label>
+        <dossier:blue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >00</dossier:blue>
+      </dossier:RGBColor>
+    </dossier:color>
+    <dossier:priority rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >60</dossier:priority>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#DeprecatedClass">
+    <dossier:priority rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >100</dossier:priority>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Datatype">
+    <dossier:priority rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >80</dossier:priority>
+    <dossier:color>
+      <dossier:RGBColor rdf:about="http://www.charvolant.org/dossier/standard/colours/datatype-colour-fill">
+        <dossier:red rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >9B</dossier:red>
+        <dossier:blue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >9B</dossier:blue>
+        <dossier:green rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >FF</dossier:green>
+        <rdfs:comment xml:lang="en">A colour used to represent RDF datatypes and datatype properties</rdfs:comment>
+        <rdfs:label xml:lang="en">datatype colour (fill)</rdfs:label>
+      </dossier:RGBColor>
+    </dossier:color>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Class">
+    <dossier:nodeShape rdf:resource="http://www.charvolant.org/dossier/node-shape/box"/>
+    <dossier:priority rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >20</dossier:priority>
+    <dossier:nodeStyle rdf:resource="http://www.charvolant.org/dossier/node-style/filled"/>
+    <dossier:nodeStyle rdf:resource="http://www.charvolant.org/dossier/node-style/rounded-corners"/>
+    <dossier:color>
+      <dossier:RGBColor rdf:about="http://www.charvolant.org/dossier/standard/colours/class-color-fill">
+        <dossier:red rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >C0</dossier:red>
+        <dossier:green rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >D2</dossier:green>
+        <dossier:blue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >FF</dossier:blue>
+        <rdfs:comment xml:lang="en">A colour used to represent classes</rdfs:comment>
+        <rdfs:label xml:lang="en">class colour (fill)</rdfs:label>
+      </dossier:RGBColor>
+    </dossier:color>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#subPropertyOf">
+    <dossier:isConstraint rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</dossier:isConstraint>
+    <dossier:arrowHead rdf:resource="http://www.charvolant.org/dossier/arrow-type/open-normal"/>
+    <dossier:reverseHierarchy rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</dossier:reverseHierarchy>
+    <dossier:showLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</dossier:showLabel>
+    <dossier:arrowTail rdf:resource="http://www.charvolant.org/dossier/arrow-type/open-normal"/>
+    <dossier:color rdf:resource="http://www.charvolant.org/dossier/standard/colours/property-colour"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.charvolant.org/dossier#CollectingNode">
+    <dossier:nodeShape rdf:resource="http://www.charvolant.org/dossier/node-shape/point"/>
+    <dossier:showLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</dossier:showLabel>
+    <dossier:color>
+      <dossier:RGBColor rdf:about="http://www.charvolant.org/dossier/standard/colours/anonymous-colour">
+        <dossier:green rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >A0</dossier:green>
+        <rdfs:label xml:lang="en">anonymous colour</rdfs:label>
+        <dossier:blue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >A0</dossier:blue>
+        <rdfs:comment xml:lang="en">A colour used to represent anonymous information, such as collecting nodes</rdfs:comment>
+        <dossier:red rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >A0</dossier:red>
+      </dossier:RGBColor>
+    </dossier:color>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#subClassOf">
+    <dossier:isConstraint rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</dossier:isConstraint>
+    <dossier:arrowTail rdf:resource="http://www.charvolant.org/dossier/arrow-type/open-normal"/>
+    <dossier:reverseHierarchy rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</dossier:reverseHierarchy>
+    <dossier:arrowHead rdf:resource="http://www.charvolant.org/dossier/arrow-type/open-normal"/>
+    <dossier:showLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</dossier:showLabel>
+    <dossier:color>
+      <dossier:RGBColor rdf:about="http://www.charvolant.org/dossier/standard/colours/class-color">
+        <dossier:blue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >98</dossier:blue>
+        <dossier:green rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >60</dossier:green>
+        <rdfs:label xml:lang="en">class colour </rdfs:label>
+        <rdfs:comment xml:lang="en">A colour used to represent classes</rdfs:comment>
+        <dossier:red rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >30</dossier:red>
+      </dossier:RGBColor>
+    </dossier:color>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#ObjectProperty">
+    <dossier:priority rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >-10</dossier:priority>
+    <dossier:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >5</dossier:weight>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Ontology">
+    <dossier:backgroundColor>
+      <dossier:RGBColor rdf:about="http://www.charvolant.org/dossier/standard/colours/namespace-colour-background">
+        <rdfs:label xml:lang="en">namespace colour (background)</rdfs:label>
+        <rdfs:comment xml:lang="en">A colour used to represent a namespace cluster</rdfs:comment>
+        <dossier:blue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >F8</dossier:blue>
+        <dossier:green rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >F0</dossier:green>
+        <dossier:red rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >F0</dossier:red>
+      </dossier:RGBColor>
+    </dossier:backgroundColor>
+    <dossier:fontName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sans-serif</dossier:fontName>
+    <dossier:fontSize rdf:datatype="http://www.w3.org/2001/XMLSchema#double"
+    >8.0</dossier:fontSize>
+  </rdf:Description>
+</rdf:RDF>
+
+<!-- Created with TopBraid -->

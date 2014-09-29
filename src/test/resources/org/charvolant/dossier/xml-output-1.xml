@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ontology href="http://localhost/dot/test1" id="test1" name="test1" uri="http://localhost/dot/test1" xmlns="http://www.charvolant.org/dossier#">
+  <style family="graphviz-graph">
+    <attribute style="bgcolor" value="#f0f0f8"/>
+    <attribute style="fontname" value="sans-serif"/>
+    <attribute style="fontsize" value="8.0"/>
+  </style>
+  <style family="graphviz-node">
+    <attribute style="fontname" value="sans-serif"/>
+    <attribute style="fontsize" value="10.0"/>
+  </style>
+  <style family="graphviz-edge">
+    <attribute style="fontname" value="sans-serif"/>
+    <attribute style="fontsize" value="10.0"/>
+  </style>
+  <style family="graphviz-node-anonymous" showLabel="false">
+    <attribute style="color" value="#a0a0a0"/>
+    <attribute style="shape" value="point"/>
+  </style>
+  <style family="graphviz-edge-super-class" reverseHierarchy="true" showLabel="false">
+    <attribute style="arrowhead" value="onormal"/>
+    <attribute style="arrowtail" value="onormal"/>
+    <attribute style="color" value="#306098"/>
+  </style>
+  <style family="graphviz-edge-super-property" reverseHierarchy="true" showLabel="false">
+    <attribute style="arrowhead" value="onormal"/>
+    <attribute style="arrowtail" value="onormal"/>
+    <attribute style="color" value="#6830d0"/>
+  </style>
+  <class href="http://localhost/dot/test1#A" id="A" name="A" uri="http://localhost/dot/test1#A">
+    <label lang="en">Class A</label>
+    <description lang="en">Test class A</description>
+    <style family="graphviz-node">
+      <attribute style="color" value="#c0d2ff"/>
+      <attribute style="shape" value="box"/>
+      <attribute style="style" value="rounded,filled"/>
+    </style>
+  </class>
+  <class href="http://localhost/dot/test1#B" id="B" name="B" uri="http://localhost/dot/test1#B">
+    <label lang="en">Class B</label>
+    <description lang="en">Test class B</description>
+    <style family="graphviz-node">
+      <attribute style="color" value="#c0d2ff"/>
+      <attribute style="shape" value="box"/>
+      <attribute style="style" value="rounded,filled"/>
+    </style>
+    <sub-class-of href="#A" name="A" ref="A" uri="http://localhost/dot/test1#A">
+      <style family="graphviz-edge" reverseHierarchy="true" showLabel="false">
+        <attribute style="arrowhead" value="onormal"/>
+        <attribute style="arrowtail" value="onormal"/>
+        <attribute style="color" value="#306098"/>
+      </style>
+    </sub-class-of>
+  </class>
+</ontology>

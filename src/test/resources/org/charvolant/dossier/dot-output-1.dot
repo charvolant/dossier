@@ -1,0 +1,35 @@
+
+digraph "test1" {
+  ranksep="1.0 equally";
+  rankdir="LR";
+  concentrate=true;
+
+  
+  node 
+  [label="test1",tooltip="test1",URL="http://localhost/dot/test1",fontname="sans-serif",fontsize="10.0"]
+  ;
+  edge 
+  [label="test1",tooltip="test1",URL="http://localhost/dot/test1",fontname="sans-serif",fontsize="10.0"]
+  ;
+
+  subgraph main {
+  
+  label="test1";
+  tooltip="http://localhost/dot/test1";
+  bgcolor="#f0f0f8";fontname="sans-serif";fontsize="8.0";
+    "A" 
+  [label="A",tooltip="Class A",URL="http://localhost/dot/test1#A",color="#c0d2ff",shape="box",style="rounded,filled"]
+  ;
+    
+    "B" 
+  [label="B",tooltip="Class B",URL="http://localhost/dot/test1#B",color="#c0d2ff",shape="box",style="rounded,filled"]
+  ;
+    
+    "A" -> "B" 
+  [label="",tooltip="",dir="back",arrowhead="onormal",arrowtail="onormal",color="#306098"]
+  ;
+      
+  }
+    
+}
+  

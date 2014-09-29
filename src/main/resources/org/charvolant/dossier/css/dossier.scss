@@ -1,0 +1,346 @@
+/* $Id */
+/* Default CSS definitions for dossier */
+
+$text-stack: "Helvetica", "Open Sans", "Callibri", "Verdana", "Arial", "sans-serif";
+
+$heading-stack: "Optima", "Marcellus", "Palatino", "serif";
+
+$header-color: #000050;
+$footer-color: $header-color;
+$class-color: #C0D2FF;
+$datatype-class-color: #9BFF9B;
+$property-color: #DAC9FA;
+$datatype-property-color: #9BFF9B;
+$annotation-property-color: #969600;
+
+body {
+  font-family: $text-stack;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: #808080;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $heading-stack;
+}
+
+
+#header {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 70px;
+  background: $header-color;
+  
+  #left-header {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 70px;
+    height: 70px;
+  }
+  
+  #centre-header {
+    position: absolute;
+    left: 70px;
+    top: 0px;
+    right: 70px;
+    height: 70px;
+    
+    #title {
+      margin-left: 2em;
+      margin-right: 2em;
+      font-family: $heading-stack;
+      font-size: xx-large;
+      color: #FFFFFF;
+    }
+  }
+  
+  #right-header {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 70px;
+    height: 70px;
+  }
+  
+  margin-bottom: 1ex;
+}
+
+#footer {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 70px;
+  margin-top: 1ex;
+  background: $footer-color;
+
+  #left-footer {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 70px;
+    height: 70px;
+  }
+  
+  #centre-footer {
+    position: absolute;
+    left: 70px;
+    top: 0px;
+    right: 70px;
+    height: 70px;
+    
+    #copyright {
+      display: inline-block;
+      margin-top: 1ex;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: $heading-stack;
+      font-size: small;
+      color: #FFFFFF;
+    }
+  }
+  
+  #right-footer {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 70px;
+    height: 70px;
+  }
+}
+
+.toc {
+  position: absolute;
+  right: 1ex;
+  width: 12em;
+  background: #DCDCDC;
+  border: thin solid #C3C3C3;
+  padding: 1ex;
+  font-size: small;
+  word-wrap: break-word;
+  
+  ul {
+    padding: 0;
+  	list-style: none inside;
+  }
+}
+
+article {
+  margin-right: 13em;
+}
+
+section {
+  position: relative;
+}
+
+.ontology {
+  background: #C0FFFF;
+}
+
+
+.diagrams {
+  padding: 1em 1ex 1em 1ex;
+}
+
+.diagram img {
+  width: 100%;
+}
+
+.classes {
+  padding-left: 1em;
+}
+
+.class {
+  margin-top: 1ex;
+  padding-top: 0.5ex;
+  padding-bottom: 0.5ex;
+  background: $class-color;
+}
+
+.properties {
+  padding-left: 1em;
+}
+
+.property {
+  margin-top: 1ex;
+  padding-top: 0.5ex;
+  padding-bottom: 0.5ex;
+  background: $property-color;
+}
+
+.identifier {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.labels {
+  margin-top: 1ex;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.label {
+   display: inline-block;
+}
+
+.descriptions {
+  margin-top: 1ex;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.description {
+   display: inline-block;  
+}
+
+.language {
+    display: inline-block;
+    width: 16px;
+    height: 11px;
+    vertical-align: super;
+    font-size: small;
+}
+
+@mixin flag($row, $col) {
+    text-indent: 100%;
+    overflow: hidden;
+    background: #A0A0A0 url('flags.png') $row * -16px $col * -11px no-repeat;
+}
+   
+.lang-en {
+    @include flag(10, 4);
+}
+
+.lang-en-au {
+	@include flag(12, 0);
+}
+
+.lang-en-ca {
+	@include flag(1, 2);
+}
+
+.lang-en-us {
+	@include flag(8, 13);
+}
+
+@mixin label {
+  text-weight: bolder;
+  color: #000080;
+}
+
+.signature-label {
+	display: none;
+}
+
+.super-label {
+	@include label;
+}
+
+.and-label {
+	@include label;
+}
+
+.or-label {
+	@include label;
+}
+
+.any-label {
+	@include label;
+}
+
+@mixin classifier-tag {
+  padding: 0 0.2ex 0 0.2ex;
+  margin-right: 1ex;
+  background: #C0FFFF;
+  box-shadow: 1px 1px 1px #808080;
+}
+
+.datatype-classifier {
+	@include classifier-tag;
+	background: $datatype-property-color;
+}
+
+.annotation-classifier {
+	@include classifier-tag;
+	background: $annotation-property-color;
+}
+
+.deprecated-classifier {
+	@include classifier-tag;
+}
+
+.functional-classifier {
+	@include classifier-tag;
+}
+
+.inverse-functional-classifier {
+	@include classifier-tag;
+}
+
+.symmetric-classifier {
+	@include classifier-tag;
+}
+
+.asymmetric-classifier {
+	@include classifier-tag;
+}
+
+.transitive-classifier {
+	@include classifier-tag;
+}
+
+.reflexive-classifier {
+	@include classifier-tag;
+}
+
+.irreflexive-classifier {
+	@include classifier-tag;
+}
+
+.characteristics {
+  margin-top: 1ex;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.signature {
+	@include classifier-tag;
+	background: #C0C0FF;
+}
+
+.metadata {
+  position: absolute;
+  right: 1ex;
+  top: 1ex;
+  padding: 0.5ex;
+  font-size: small;
+  overflow: hidden;
+  background: #DCDCE6;
+  box-shadow: 1px 1px 1px #808086;
+  z-index: 10;
+  
+  .label-metadata {
+    display: block;
+    font-weight: bolder;
+    text-align: right;
+  }
+  
+  table {
+    display: none;
+  }
+  
+  table:hover {
+    display: table;
+  }
+  
+  .label-metadata:hover + table {
+    display: table;
+  }
+}

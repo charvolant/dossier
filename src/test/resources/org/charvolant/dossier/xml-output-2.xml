@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ontology href="http://localhost/dot/test2" id="test2" name="test2" uri="http://localhost/dot/test2" xmlns="http://www.charvolant.org/dossier#">
+ <style family="graphviz-graph">
+ <attribute style="bgcolor" value="#f0f0f8"/>
+ <attribute style="fontname" value="sans-serif"/>
+ <attribute style="fontsize" value="8.0"/>
+ </style>
+ <style family="graphviz-node">
+ <attribute style="fontname" value="sans-serif"/>
+ <attribute style="fontsize" value="10.0"/>
+ </style>
+ <style family="graphviz-edge">
+ <attribute style="fontname" value="sans-serif"/>
+ <attribute style="fontsize" value="10.0"/>
+ </style>
+ <style family="graphviz-node-anonymous" showLabel="false">
+ <attribute style="color" value="#a0a0a0"/>
+ <attribute style="shape" value="point"/>
+ </style>
+ <style family="graphviz-edge-super-class" reverseHierarchy="true" showLabel="false">
+ <attribute style="arrowhead" value="onormal"/>
+ <attribute style="arrowtail" value="onormal"/>
+ <attribute style="color" value="#306098"/>
+ </style>
+ <style family="graphviz-edge-super-property" reverseHierarchy="true" showLabel="false">
+ <attribute style="arrowhead" value="onormal"/>
+ <attribute style="arrowtail" value="onormal"/>
+ <attribute style="color" value="#6830d0"/>
+ </style>
+ <class href="http://localhost/dot/test2#A" id="A" name="A" uri="http://localhost/dot/test2#A">
+ <label lang="en">Class A</label>
+ <style family="graphviz-node">
+ <attribute style="color" value="#c0d2ff"/>
+ <attribute style="shape" value="box"/>
+ <attribute style="style" value="rounded,filled"/>
+ </style>
+ </class>
+ <class href="http://localhost/dot/test2#B" id="B" name="B" uri="http://localhost/dot/test2#B">
+ <label lang="en">Class B</label>
+ <style family="graphviz-node">
+ <attribute style="color" value="#c0d2ff"/>
+ <attribute style="shape" value="box"/>
+ <attribute style="style" value="rounded,filled"/>
+ </style>
+ </class>
+ <class href="http://localhost/dot/test2#C" id="C" name="C" uri="http://localhost/dot/test2#C">
+ <label lang="en">Class C</label>
+ <style family="graphviz-node">
+ <attribute style="color" value="#c0d2ff"/>
+ <attribute style="shape" value="box"/>
+ <attribute style="style" value="rounded,filled"/>
+ </style>
+ <sub-class-of href="#B" name="B" ref="B" uri="http://localhost/dot/test2#B">
+ <style family="graphviz-edge" reverseHierarchy="true" showLabel="false">
+ <attribute style="arrowhead" value="onormal"/>
+ <attribute style="arrowtail" value="onormal"/>
+ <attribute style="color" value="#306098"/>
+ </style>
+ </sub-class-of>
+ </class>
+ <property href="http://localhost/dot/test2#property1" id="property1" name="property1" uri="http://localhost/dot/test2#property1">
+ <label lang="en">property 1</label>
+ <style family="graphviz-node">
+ <attribute style="color" value="#6830d0"/>
+ <attribute style="shape" value="none"/>
+ </style>
+ <style family="graphviz-edge-incoming" showLabel="false">
+ <attribute style="arrowhead" value="none"/>
+ <attribute style="headclip" value="false"/>
+ <attribute style="color" value="#6830d0"/>
+ <attribute style="weight" value="5"/>
+ </style>
+ <style family="graphviz-edge-outgoing" showLabel="false">
+ <attribute style="arrowhead" value="vee"/>
+ <attribute style="arrowtail" value="none"/>
+ <attribute style="tailclip" value="false"/>
+ <attribute style="color" value="#6830d0"/>
+ <attribute style="weight" value="5"/>
+ </style>
+ <domain>
+ <class-ref href="#C" name="C" ref="C" uri="http://localhost/dot/test2#C"/>
+ </domain>
+ <range>
+ <class-ref href="#A" name="A" ref="A" uri="http://localhost/dot/test2#A"/>
+ </range>
+ </property>
+ <property href="http://localhost/dot/test2#property2" id="property2" name="property2" uri="http://localhost/dot/test2#property2">
+ <label lang="en">property 2</label>
+ <style family="graphviz-node">
+ <attribute style="color" value="#6830d0"/>
+ <attribute style="shape" value="none"/>
+ </style>
+ <style family="graphviz-edge-incoming" showLabel="false">
+ <attribute style="arrowhead" value="none"/>
+ <attribute style="headclip" value="false"/>
+ <attribute style="color" value="#6830d0"/>
+ <attribute style="weight" value="5"/>
+ </style>
+ <style family="graphviz-edge-outgoing" showLabel="false">
+ <attribute style="arrowhead" value="vee"/>
+ <attribute style="arrowtail" value="none"/>
+ <attribute style="tailclip" value="false"/>
+ <attribute style="color" value="#6830d0"/>
+ <attribute style="weight" value="5"/>
+ </style>
+ <domain>
+ <class-ref href="#C" name="C" ref="C" uri="http://localhost/dot/test2#C"/>
+ </domain>
+ <range>
+ <union>
+ <class-ref href="#A" name="A" ref="A" uri="http://localhost/dot/test2#A"/>
+ <class-ref href="#B" name="B" ref="B" uri="http://localhost/dot/test2#B"/>
+ </union>
+ </range>
+ </property>
+</ontology>

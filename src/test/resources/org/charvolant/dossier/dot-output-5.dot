@@ -1,0 +1,62 @@
+
+digraph "test5" {
+  ranksep="1.0 equally";
+  rankdir="LR";
+  concentrate=true;
+
+  
+  node 
+  [label="test5",tooltip="test5",URL="http://localhost/dot/test5",fontname="sans-serif",fontsize="10.0"]
+  ;
+  edge 
+  [label="test5",tooltip="test5",URL="http://localhost/dot/test5",fontname="sans-serif",fontsize="10.0"]
+  ;
+
+  subgraph main {
+  
+  label="test5";
+  tooltip="http://localhost/dot/test5";
+  bgcolor="#f0f0f8";fontname="sans-serif";fontsize="8.0";
+    "A" 
+  [label="A",tooltip="Class A",URL="http://localhost/dot/test5#A",color="#c0d2ff",shape="box",style="rounded,filled"]
+  ;
+    
+    "B" 
+  [label="B",tooltip="Class B",URL="http://localhost/dot/test5#B",color="#c0d2ff",shape="box",style="rounded,filled"]
+  ;
+    
+    "C" 
+  [label="C",tooltip="C",URL="http://localhost/dot/test5#C",color="#c0d2ff",shape="box",style="rounded,filled"]
+  ;
+    
+    "B" -> "C" 
+  [label="",tooltip="",dir="back",arrowhead="onormal",arrowtail="onormal",color="#306098"]
+  ;
+      
+    "property1"  
+  [label="property1",tooltip="property1",URL="http://localhost/dot/test5#property1",color="#6830d0",shape="none"]
+  ;
+    
+    "A" -> "property1" 
+  [label="",tooltip="A → property1",URL="http://localhost/dot/test5#property1",arrowhead="none",headclip="false",color="#6830d0",weight="5"]
+  ;
+  
+    "property1" -> "B" 
+  [label="",tooltip="property1 → B",URL="http://localhost/dot/test5#property1",arrowhead="vee",arrowtail="none",tailclip="false",color="#6830d0",weight="5"]
+  ;
+  
+    "property2"  
+  [label="property2",tooltip="property2",URL="http://localhost/dot/test5#property2",color="#6830d0",shape="none"]
+  ;
+    
+    "property1" -> "property2" 
+  [label="",tooltip="",dir="back",arrowhead="onormal",arrowtail="onormal",color="#6830d0"]
+  ;
+      
+    "property2" -> "C" 
+  [label="",tooltip="property2 → C",URL="http://localhost/dot/test5#property2",arrowhead="vee",arrowtail="none",tailclip="false",color="#6830d0",weight="5"]
+  ;
+  
+  }
+    
+}
