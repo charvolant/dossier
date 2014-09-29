@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd"
+  name="Dossier" xmlns="http://maven.apache.org/DECORATION/1.4.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <bannerLeft>
+    <name>Dossier ontology documentation generator and maven plugin</name>
+  </bannerLeft>
+  <publishDate />
+  <version />
+  <body>
+    <links>
+      <item name="Dossier ontology documentation generator and maven plugin"
+        href=".." />
+    </links>
+    <menu ref="parent" />
+    <menu name="Overview">
+      <item name="Introduction" href="index.html" />
+      <item name="Goals" href="plugin-info.html" />
+      <item name="Usage" href="usage.html" />
+      <item name="FAQ" href="faq.html" />
+    </menu>
+    <menu ref="reports" />
+  </body>
+</project>
+
