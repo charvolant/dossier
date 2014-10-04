@@ -24,7 +24,7 @@ the classes and properties contained within the ontology.
 
   <scm>
     <connection>scm:git:https://github.com/charvolant/dossier.git</connection>
-    <url>https://github.com/charvolant/dossier.git</url>
+    <url>https://github.com/charvolant/dossier</url>
     <developerConnection>scm:git:https://github.com/charvolant/dossier.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
@@ -333,7 +333,7 @@ the classes and properties contained within the ontology.
           <plugin>
             <groupId>com.github.github</groupId>
             <artifactId>site-maven-plugin</artifactId>
-            <version>0.9</version>
+            <version>0.10</version>
             <configuration>
               <message>Creating site for ${project.version}</message>
             </configuration>
