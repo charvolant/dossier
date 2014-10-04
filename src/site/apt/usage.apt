@@ -1,0 +1,38 @@
+Usage
+
+  The main use of dossier is to generate ontology diagrams to be packaged
+  into site documentation.
+  A typical usage is:
+
++------------
+<build>
+  ...
+  <plugins>
+    ...
+    <plugin>
+      <groupId>org.charvolant</groupId>
+      <artifactId>dossier-maven-plugin</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <configuration>
+        <ontologies>
+          <directory>src/main/resources/org/charvolant/dossier</directory>
+          <includes>
+            <include>*.owl</include>
+          </includes>
+        </ontologies>
+      </configuration>
+      <executions>
+        <execution>
+          <goals>
+            <goal>document</goal>
+          </goals>
+          <phase>site</phase>
+        </execution>
+      </executions>
+     </plugin>
+     ...
+  </plugins>
+  ...
+</build>
++------------
+

@@ -1,0 +1,90 @@
+Customising the ontology diagram
+
+  Dossier allows a certain amount of customisation when generating ontology diagrams.
+  The display preferences for rendering classes, properties, etc. are specified as RDF (what else?)
+  using the {{{./dossier/dossier.html}Dossier Ontology}}.
+
+  Dossier uses the {{{http://www.graphviz.org}graphviz}} dot program to convert a graph
+  in the {{{http://www.graphviz.org/content/dot-language}dot language}} into a nice SVG diagram. 
+  The display preferences essentially feed colour, shape, font and layout information into
+  the dot definition, using the 
+  {{{http://www.graphviz.org/content/attrs}node, line and graph attributes}}.
+
+  An example set of statements (in turtle form) are:
+
++-----------------
+rdfs:Resource  
+    dossier:fontName  "sans-serif"^^xsd:string ;
+    dossier:fontSize  "10.0"^^xsd:double ;
+    dossier:priority  -100 .
+
+owl:DatatypeProperty  
+    dossier:color         <http://www.charvolant.org/dossier/standard/colours/datatype-colour> ;
+    dossier:isConstraint  true ;
+    dossier:priority      80 ;
+    dossier:weight        0 .
+    
+<http://www.charvolant.org/dossier/standard/colours/datatype-colour>
+    a              dossier:RGBColor ;
+    rdfs:comment   "A colour used to represent RDF datatypes and datatype properties"@en ;
+    rdfs:label     "datatype colour"@en ;
+    dossier:blue   "00"^^xsd:string ;
+    dossier:green  "C0"^^xsd:string ;
+    dossier:red    "00"^^xsd:string .
++-----------------
+
+  These associate the following rendering rules:
+
+  * The <<<isConstraint>>> property acts as a constraint. This means that dot will attempt to place range classes to the right of domain classes.
+
+  * The <<<weight>>> property indicates how close the property should be to its domain and range classes.
+
+  * The <<<color>>> property gives the basic colour to use when drawing lines and shapes. See {{Colours}} for how to define colours.
+
+  * The <<<priority>>> property is used to choose between competing statements when something inherits more than one possible property.
+  
+  * The <<<fontName>>> property gives the font name for use when rendering text.
+  
+  * The <<<fontSize>>> property gives the font size in points.
+
+* Inheritance
+
+  Generally, dossier properties are defined as annotations on the classes of classes and properties.
+  For example, all classes have the same visual style, defined on owl:Class itself.
+  Inheritance is used (eg. something that is an owl:Class will inherit from rdfs:Class, as well)
+  with priorities used to sort out multiple inheritance.
+
+* Colours
+
+  Colours are generally defined as named resources with red, green, blue and alpha components.
+  These components can be defined as hex (xsd:string datatype), 
+  integers from 0-255 (xsd:unsignedByte) or floats from 0.0-1.0 (xsd:double).
+  
+* Using customisations
+
+  By default, the diagram generator uses an internal set of display preferences,
+  located at <<</org/charvolant/dossier/standard.rdf>>>
+  To use customised display preferences, use the <<<displayPreferences>>> configuration option.
+  
++------------
+<build>
+  ...
+    <plugin>
+      <groupId>org.charvolant</groupId>
+      <artifactId>dossier-maven-plugin</artifactId>
+      <configuration>
+        ...
+        <displayPreferences>src/main/ontology/my-display-preferences.rdf</displayPreferences>
+      </configuration>
+      ...
+      </plugin>
+  ...
+</build>
++------------
+
+Customising the HTML documentation
+ 
+  To be done.
+  By default, the CSS for HTML documentation is copied internally from
+  <<</org/charvolant/dossier/css>>>
+  It should be possible to inject different CSS into the HTML output.

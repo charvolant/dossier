@@ -4,21 +4,26 @@
   name="Dossier" xmlns="http://maven.apache.org/DECORATION/1.4.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <bannerLeft>
-    <name>Dossier ontology documentation generator and maven plugin</name>
+    <name>Dossier</name>
+    <src>images/dossier.png</src>
+    <href>http://charvolant.github.io/dossier</href>
   </bannerLeft>
+  <bannerRight>
+    <name>Dossier ontology documentation generator and maven plugin</name>
+  </bannerRight>
   <publishDate />
   <version />
   <body>
-    <links>
-      <item name="Dossier ontology documentation generator and maven plugin"
-        href=".." />
-    </links>
-    <menu ref="parent" />
+<!--     <menu ref="parent" /> -->
     <menu name="Overview">
       <item name="Introduction" href="index.html" />
       <item name="Goals" href="plugin-info.html" />
       <item name="Usage" href="usage.html" />
-      <item name="FAQ" href="faq.html" />
+<!--       <item name="FAQ" href="faq.html" /> -->
+    </menu>
+    <menu name="Customisation">
+      <item name="Customisation" href="customisation.html" />
+      <item name="Dossier Ontology" href="dossier/dossier.html" />
     </menu>
     <menu ref="reports" />
   </body>

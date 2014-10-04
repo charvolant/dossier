@@ -30,11 +30,11 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
  * Both HTML documentation, SVG diagrams and style sheets are generated into
  * a directory.
  */
-@Mojo(name = "document", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
+@Mojo(name = "document", defaultPhase = LifecyclePhase.SITE)
 public class DocumentMojo extends AbstractMojo
-{  
+{    
   /** The enclosing maven project */
-  @Component
+  @Parameter(defaultValue="${project}", readonly=true)
   private MavenProject project;
   
   /** Location of the ontologies. */
@@ -44,10 +44,16 @@ public class DocumentMojo extends AbstractMojo
   /**
    * Location of the display preferences to use.
    * <p>
-   * Defaults to the internal standard 
+   * If not set then the preferences defaults to the internal standard 
    */
-  @Parameter(property="preferences", required=true)
+  @Parameter(property="preferences", required=false)
   private File preferencesFile;
+  
+  /**
+   * The directory into which generated files are placed.
+   */
+  @Parameter(property="outputDirectory", defaultValue="${project.build.directory}/site/dossier")
+  private File outputDirectory;
 
   /**
    * Run the goal.
@@ -58,23 +64,22 @@ public class DocumentMojo extends AbstractMojo
   {
     try {
       FileSetManager fsManager;
-      File base, df, od, of;
+      File base, df, of;
       Model display;
       OntModel model;
       Configuration configuration;
       CollectionCreator creator;
 
-      fsManager = new FileSetManager();
+      fsManager = new FileSetManager(this.getLog(), true);
       base = this.project == null ? new File(".").getAbsoluteFile().getCanonicalFile() : this.project.getBasedir();
-      od = new File(base, this.ontologies.getOutputDirectory());
-      df = new File(base, this.ontologies.getDirectory());
-      if (!od.exists())
-        if (!od.mkdirs())
-          throw new MojoExecutionException("Unable to create output direcrtory " + od);
+      df = this.ontologies.getDirectory() == null ? base :new File(base, this.ontologies.getDirectory());
+      if (!this.outputDirectory.exists())
+        if (!this.outputDirectory.mkdirs())
+          throw new MojoExecutionException("Unable to create output direcrtory " + this.outputDirectory);
       display = ModelFactory.createDefaultModel();
-      display.read(this.getClass().getResource("dossier.rdf").toString());
+      display.read(this.getClass().getResourceAsStream("dossier.rdf"), null);
       if (this.preferencesFile == null)
-        display.read(this.getClass().getResource("standard.rdf").toString());
+        display.read(this.getClass().getResourceAsStream("standard.rdf"), null);
       else {
         if (this.preferencesFile == null || !this.preferencesFile.exists())
           throw new MojoExecutionException("No preferences file " + this.preferencesFile);
@@ -92,7 +97,7 @@ public class DocumentMojo extends AbstractMojo
         model.read(of.toURI().toString());
         creator.addOntology(model);
       }
-      creator.generate(od);
+      creator.generate(this.outputDirectory);
     } catch (MojoExecutionException ex) {
       throw ex;
     } catch (Exception ex) {

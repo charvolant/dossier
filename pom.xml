@@ -8,13 +8,13 @@
   <packaging>maven-plugin</packaging>
 
   <name>Dossier ontology documentation generator and maven plugin</name>
-  <description>Dossier generates a &quot;dossier&quot; of documentation for OWL ontologies.
-
-In its standard form, a user can specify a list of ontology files to document. dossier will them generate diagrams of the ontologies and html documentation describing the classes and properties contained within the ontology.
-
-The visual style and layout of the documentation is partially specifiable by using RDF that conforms to (what else?) the dossier ontology. A standard style is available for normal use, with suitable shapes and colour schemes that distingush between classes, object properties, data properties and annota‭tions.
-
-dossier uses graphviz to generate diagrams.</description>
+  <description>
+(Currently under development; use with caution and appropriate PPE.)
+Dossier generates a &quot;dossier&quot; of documentation for OWL ontologies.
+A user can specify a list of ontology files to document.
+dossier will them generate diagrams of the ontologies and HTML documentation describing 
+the classes and properties contained within the ontology.
+  </description>
   <organization>
     <name>charvolant.org</name>
     <url>http://www.charvolant.org</url>
@@ -57,6 +57,7 @@ dossier uses graphviz to generate diagrams.</description>
     <junit.version>4.10</junit.version>
     <jena.version>2.12.0</jena.version>
     <jena.tools.version>0.6</jena.tools.version>
+    <github.global.server>github</github.global.server>
   </properties>
 
   <dependencies>
@@ -76,12 +77,6 @@ dossier uses graphviz to generate diagrams.</description>
       <artifactId>maven-project</artifactId>
       <version>2.2.1</version>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>plexus-container-default</artifactId>
-          <groupId>org.codehaus.plexus</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
@@ -98,7 +93,7 @@ dossier uses graphviz to generate diagrams.</description>
     <dependency>
       <groupId>org.apache.maven.shared</groupId>
       <artifactId>file-management</artifactId>
-      <version>1.2</version>
+      <version>1.2.1</version>
       <exclusions>
         <exclusion>
           <artifactId>plexus-container-default</artifactId>
@@ -243,11 +238,32 @@ dossier uses graphviz to generate diagrams.</description>
       </plugin>
     </plugins>
   </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.7</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>index</report>
+              <report>summary</report>
+              <report>project-team</report>
+              <report>issue-tracking</report>
+              <report>license</report>
+              <report>scm</report>
+              <report>dependencies</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
   <profiles>
     <profile>
       <id>run-its</id>
       <build>
-
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -279,7 +295,58 @@ dossier uses graphviz to generate diagrams.</description>
             </executions>
           </plugin>
         </plugins>
-
+      </build>
+    </profile>
+    <profile>
+      <!-- Eat our own dogfood -->
+      <id>site</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.charvolant</groupId>
+            <artifactId>dossier-maven-plugin</artifactId>
+            <version>${project.version}</version>
+            <configuration>
+              <ontologies>
+                <directory>src/main/resources/org/charvolant/dossier</directory>
+                <includes>
+                  <include>dossier.rdf</include>
+                </includes>
+              </ontologies>
+            </configuration>
+           <executions>
+              <execution>
+                <goals>
+                  <goal>document</goal>
+                </goals>
+                <phase>site</phase>
+              </execution>
+            </executions>
+           </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>deploy-site</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.github</groupId>
+            <artifactId>site-maven-plugin</artifactId>
+            <version>0.9</version>
+            <configuration>
+              <message>Creating site for ${project.version}</message>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>site</goal>
+                </goals>
+                <phase>site</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
       </build>
     </profile>
   </profiles>
