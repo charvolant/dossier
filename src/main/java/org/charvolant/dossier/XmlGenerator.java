@@ -9,11 +9,14 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.charvolant.dossier.vocabulary.Dossier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.google.common.collect.HashBiMap;
 import com.hp.hpl.jena.ontology.ComplementClass;
+import com.hp.hpl.jena.ontology.EnumeratedClass;
 import com.hp.hpl.jena.ontology.IntersectionClass;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
@@ -34,6 +37,9 @@ import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class XmlGenerator extends Generator {
+  @SuppressWarnings("unused")
+  private static final Logger logger = LoggerFactory.getLogger(XmlGenerator.class);
+  
   /** The location of the dossier schema */
   @SuppressWarnings("unused")
   private static final URL SCHEMA_LOCATION = XmlGenerator.class.getResource("dossier.xsd");
@@ -480,7 +486,7 @@ public class XmlGenerator extends Generator {
     Resource resource = this.model.createResource(RDFS.Resource.getURI());
     Resource anonymous = this.model.createResource(Dossier.CollectingNode);
     Element ontology = this.generateResourceType(document, "ontology", ont);
-    String prefix = this.model.getNsURIPrefix(ont.getNameSpace());
+    String prefix = this.getPrefix(ont.getNameSpace());
     Element style, diagram;
 
     if ((style = this.generateStyle(document, ont, this.FAMILY_GRAPHVIZ_GRAPH)) != null)
@@ -584,9 +590,9 @@ public class XmlGenerator extends Generator {
     this.collectIds();
     ontology = this.generateOntology(document, this.primary);
     for (String namespace: this.collectNamespaces()) {
-      String prefix = namespace == null ? "" : this.model.getNsURIPrefix(namespace);
+      String prefix = this.getPrefix(namespace);
 
-      if (!prefix.isEmpty()) {
+      if (prefix != null && !prefix.isEmpty()) {
         sub = this.model.createOntology(namespace);
         subo = this.generateOntology(document, sub);
         ontology.appendChild(subo);
@@ -626,6 +632,13 @@ public class XmlGenerator extends Generator {
         this.parent = this.document.createElementNS(XmlGenerator.this.DOSSIER_URI, "intersection");
         previous.appendChild(this.parent);
         intersection.getOperands().apply(this);
+        this.parent = previous;
+      } else if (clazz.isEnumeratedClass()) {
+        EnumeratedClass enumeration = clazz.asEnumeratedClass();
+
+        this.parent = this.document.createElementNS(XmlGenerator.this.DOSSIER_URI, "enumeration");
+        previous.appendChild(this.parent);
+        enumeration.getOneOf().apply(this);
         this.parent = previous;
       } else if (clazz.isComplementClass()) {
         ComplementClass complement = clazz.asComplementClass();

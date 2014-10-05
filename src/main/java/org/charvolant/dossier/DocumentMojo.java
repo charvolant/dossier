@@ -11,7 +11,6 @@ import java.io.File;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -19,8 +18,6 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.shared.model.fileset.FileSet;
 import org.apache.maven.shared.model.fileset.util.FileSetManager;
 
-import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
@@ -66,13 +63,16 @@ public class DocumentMojo extends AbstractMojo
       FileSetManager fsManager;
       File base, df, of;
       Model display;
-      OntModel model;
       Configuration configuration;
       CollectionCreator creator;
 
       fsManager = new FileSetManager(this.getLog(), true);
       base = this.project == null ? new File(".").getAbsoluteFile().getCanonicalFile() : this.project.getBasedir();
-      df = this.ontologies.getDirectory() == null ? base :new File(base, this.ontologies.getDirectory());
+      df = this.ontologies.getDirectory() == null ? base : new File(this.ontologies.getDirectory());
+      this.getLog().debug("Project base " + base);
+      if (!df.isAbsolute())
+        df = new File(base, df.getPath());
+      this.getLog().debug("Directory " + df);
       if (!this.outputDirectory.exists())
         if (!this.outputDirectory.mkdirs())
           throw new MojoExecutionException("Unable to create output direcrtory " + this.outputDirectory);
@@ -89,13 +89,11 @@ public class DocumentMojo extends AbstractMojo
       configuration.setDisplayModel(display);
       creator = new CollectionCreator(configuration);
       for (String ontology: fsManager.getIncludedFiles(this.ontologies)) {
+        this.getLog().debug("Loading " + ontology);
         of = new File(df, ontology).getCanonicalFile();
         if (!of.exists())
           throw new MojoExecutionException("No ontology file " + of);
-        model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_RDFS_INF);
-        model.getDocumentManager().setProcessImports(false);
-        model.read(of.toURI().toString());
-        creator.addOntology(model);
+        creator.load(of);
       }
       creator.generate(this.outputDirectory);
     } catch (MojoExecutionException ex) {

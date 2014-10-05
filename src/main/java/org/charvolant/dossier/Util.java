@@ -7,6 +7,8 @@
  */
 package org.charvolant.dossier;
 
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.io.Files;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -197,5 +200,48 @@ public class Util {
      }
    }
    return reduced;
+ }
+ 
+ /**
+  * Get the base name for a path.
+  * <p>
+  * This is the path without any precending path and no extension.
+  *
+  * @param path
+  * @param seperator
+  * 
+  * @return The base name
+  */
+ private static String getBaseName(String path, char seperator) {
+   int sep = path.lastIndexOf(seperator);
+   
+   path = sep == -1 ? path : path.substring(sep + 1);
+   return Files.getNameWithoutExtension(path);
+ }
+ 
+ /**
+  * Get the base name for a file.
+  * <p>
+  * This is the name of the file with no preceding path and no extension.
+  *
+  * @param file The file
+  * 
+  * @return The files base name
+  */
+ public static String getBaseName(File file) {
+   return getBaseName(file.getName(), File.separatorChar);
+ }
+ 
+ /**
+  * Get the base name for a url
+  * <p>
+  * This is the name of the url path with no preceding directories and no extension.
+  *
+  * @param url The URL
+  * 
+  * @return The URLs base name
+  */
+ public static String getBaseName(URI uri) {
+   return getBaseName(uri.getPath(), '/');
  }
 }

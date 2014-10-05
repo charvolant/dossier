@@ -223,6 +223,14 @@
     </complexType>
   </element>
 
+  <element name="enumeration" substitutionGroup="dossier:extent">
+    <complexType>
+      <sequence>
+        <element ref="dossier:extent" maxOccurs="unbounded" minOccurs="1"></element>
+      </sequence>
+    </complexType>
+  </element>
+
   <element name="complement" substitutionGroup="dossier:extent">
     <complexType>
       <sequence>

@@ -1,11 +1,16 @@
 package org.charvolant.dossier;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -37,6 +42,9 @@ import com.hp.hpl.jena.vocabulary.XSD;
  *
  */
 abstract public class Generator {
+  @SuppressWarnings("unused")
+  private static final Logger logger = LoggerFactory.getLogger(Generator.class);
+
   /** The list of XSD datatypes that automatically make the resource a datatype and the class present */
   private static final Resource[] XSD_DATATYPES = {
     XSD.anyURI,
@@ -84,7 +92,7 @@ abstract public class Generator {
     XSD.xshort,
     XSD.xstring
   };
-  
+
   /**
    * A list of terms that can be used to generate metadata for a resource.
    */
@@ -129,7 +137,7 @@ abstract public class Generator {
   /** The language order to use */
   protected List<String> languageOrder;
 
-  
+
 
   /**
    * Construct a Generator.
@@ -152,7 +160,7 @@ abstract public class Generator {
     this.languageOrder = this.chooseLanguageOrder();
     this.addDatatypes();
   }
-  
+
   /**
    * Choose the order in which to process language-specific elements.
    * <p>
@@ -166,7 +174,7 @@ abstract public class Generator {
   protected List<String> chooseLanguageOrder() {
     List<String> order = new ArrayList<String>(5);
     Locale locale = this.configuration.getLocale();
-    
+
     if (!locale.getCountry().isEmpty())
       order.add((locale.getLanguage() + "-" + locale.getCountry()).toLowerCase());
     order.add(locale.getLanguage().toLowerCase());
@@ -226,7 +234,7 @@ abstract public class Generator {
     this.ids.put(resource, id);
     return id;
   }
-  
+
   /**
    * Create a cross-reference for a resource.
    * <p>
@@ -234,7 +242,7 @@ abstract public class Generator {
    * If the resource has an entry in the namespace map,
    * then use the entry.
    * Otherwise, use the resource URI.
-    *
+   *
    * @param resource The resource
    * @param full Try to map to a file name, even if this is local
    * 
@@ -244,7 +252,7 @@ abstract public class Generator {
    */
   protected String getHref(Resource resource, boolean full) {
     String file;
-    
+
     if (!resource.isURIResource())
       return "#";
     if (!full && this.isLocal(resource)) 
@@ -266,12 +274,13 @@ abstract public class Generator {
    */
   protected String getLabel(Resource resource) {
     StringBuilder builder;
-    String prefix;
-  
+    String ns, prefix;
+
     if (resource.isAnon())
       return "";
     builder = new StringBuilder();
-    prefix = this.model.getNsURIPrefix(resource.getNameSpace());
+    ns = resource.getNameSpace();
+    prefix = this.getPrefix(ns);
     if (prefix != null && !prefix.isEmpty()) {
       builder.append(prefix);
       builder.append(":");
@@ -279,7 +288,7 @@ abstract public class Generator {
     builder.append(resource.getLocalName());
     return builder.toString();
   }
-  
+
 
   /**
    * See if we can append a property of the appropriate language.
@@ -315,7 +324,7 @@ abstract public class Generator {
    */
   protected void appendProperty(Resource resource, StringBuilder sb, Property...properties) {
     Locale locale = this.configuration.getLocale();
-    
+
     for (Property property: properties) {
       if (!locale.getCountry().isEmpty() && this.appendProperty(resource, (locale.getLanguage() + "-" + locale.getCountry()).toLowerCase(), sb, property))
         return;
@@ -367,7 +376,7 @@ abstract public class Generator {
       sb.append(resource.getLocalName());
     return sb.toString();
   }
-  
+
   /**
    * See if a resource is local to the model.
    *
@@ -377,14 +386,14 @@ abstract public class Generator {
    */
   protected boolean isLocal(Resource resource) {
     String prefix;
-    
+
     if (!resource.isURIResource() || resource.getNameSpace() == null)
       return true;
-    prefix = this.model.getNsURIPrefix(resource.getNameSpace());
-    return prefix == null || prefix.isEmpty();
+    prefix = this.getPrefix(resource.getNameSpace());
+    return prefix != null && prefix.isEmpty();
   }
 
-  
+
   /**
    * Add datatype information to domains and ranges that happen to fall into
    * the model but which have not been specified.
@@ -397,7 +406,7 @@ abstract public class Generator {
         this.model.add(datatype, RDF.type, rdfsDatatype);
     }
   }
-  
+
 
   /**
    * Reduce a list of candidiate elements to things
@@ -412,11 +421,36 @@ abstract public class Generator {
 
     while (candidates.hasNext()) {
       T candidate = candidates.next();
-      
+
       if (this.isLocal(candidate))
         chosen.add(candidate);
     }
     return chosen;  
+  }
+
+  /**
+   * Get the prefix for a namespace.
+   * <p>
+   * If the prefix doesn't yet exist, a new one is made up
+   * if the namespace corresponds to one of the ontologies in the
+   * configuration.
+   *
+   * @param ns The namespace
+   * 
+   * @return The prefix
+   */
+  protected String getPrefix(String ns) {
+    String prefix;
+
+    if (ns == null)
+      return null;
+    prefix = this.model.getNsURIPrefix(ns);
+    if (prefix == null) {
+      prefix = this.configuration.getPrefix(ns);
+      if (prefix != null)
+        this.model.setNsPrefix(prefix, ns);
+    }
+    return prefix;
   }
 
   /**
@@ -429,30 +463,35 @@ abstract public class Generator {
    */
   protected <T extends Resource> Set<T> collectPrefix(Collection<T> candidates, String prefix) {
     Set<T> chosen = new HashSet<T>();
-    String pf;
+    String ns, pf;
 
     if (prefix == null)
       prefix = "";
     for (T candidate: candidates) {
-      pf = this.model.getNsURIPrefix(candidate.getNameSpace());
+      ns = candidate.getNameSpace();
+      pf = this.getPrefix(ns);
       if (prefix.equals(pf))
-          chosen.add(candidate);
+        chosen.add(candidate);
     }
     return chosen;  
   }
-  
+
   /**
    * Collect the namespaces used by the classes and properties.
+   * <p>
+   * Make sure that all namespaces have an
    *
    * @return The collected namespace set
    */
   protected Set<String> collectNamespaces() {
     Set<String> namespaces = new HashSet<String>();
-    
+
     for (OntClass clazz: this.referencedClasses)
       namespaces.add(clazz.getNameSpace());
     for (OntProperty property: this.referencedProperties)
       namespaces.add(property.getNameSpace());
+    for (String ns: namespaces)
+      this.getPrefix(ns);
     return namespaces;
   }
 

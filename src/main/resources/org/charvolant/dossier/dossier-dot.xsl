@@ -114,6 +114,12 @@ digraph "<xsl:call-template name="format-name"><xsl:with-param name="source" sel
   <xsl:param name="type"/>
   <xsl:apply-templates select="*"><xsl:with-param name="property" select="$property"/><xsl:with-param name="type" select="$type"/></xsl:apply-templates>
   </xsl:template>
+ 
+  <xsl:template match="dossier:enumeration">
+  <xsl:param name="property"/>
+  <xsl:param name="type"/>
+  <xsl:apply-templates select="*"><xsl:with-param name="property" select="$property"/><xsl:with-param name="type" select="$type"/></xsl:apply-templates>
+  </xsl:template>
        
   <xsl:template name="format-reference">
   <xsl:param name="source" select="."/>

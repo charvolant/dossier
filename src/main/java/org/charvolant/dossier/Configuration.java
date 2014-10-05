@@ -10,6 +10,9 @@ package org.charvolant.dossier;
 import java.util.Locale;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Sets;
@@ -34,6 +37,8 @@ import com.hp.hpl.jena.vocabulary.XSD;
  *
  */
 public class Configuration {
+  private static final Logger logger = LoggerFactory.getLogger(Configuration.class);
+  
   /** The list of structural ontologies that should generally be overridden */
   private static final Set<String> STRUCTURE_URIS = Sets.newHashSet(XSD.getURI(), OWL.getURI(), RDF.getURI(), RDFS.getURI());
 
@@ -122,22 +127,38 @@ public class Configuration {
    * 
    * @see #choosePrimaryOntology(OntModel)
    */
-  public void createNamespaceRoot(OntModel model) {
+  public void createNamespaceRoot(OntModel model, String base) {
     Ontology ontology = this.choosePrimaryOntology(model);
     String ns = model.getNsPrefixURI("");
     int current = 0;
-    String base, candidiate;
+    String candidate;
 
+    this.logger.debug("Primary ontology " + ontology.getURI() + " has namespace " + ns);
     if (!this.roots.containsKey(ns)) {
-      base = ontology.getLocalName().toLowerCase();
-      candidiate = base;
-      while (this.roots.inverse().containsKey(candidiate)) {
-        candidiate = base + "_" + ++current;
+      candidate = base;
+      while (this.roots.inverse().containsKey(candidate)) {
+        candidate = base + "_" + ++current;
       }
-      this.roots.put(ns, candidiate);
+      this.logger.debug("Adding root for " + ns + " as " + candidate);
+      this.roots.put(ns, candidate);
     }
     if (!this.namespaces.containsKey(ontology.getURI()))
       this.namespaces.put(ontology.getURI(), ns);
+  }
+  
+  /**
+   * Get a default prefix for a namespace, if available.
+   * <p>
+   * If this namespace has a root, then return the root as a prefix.
+   *
+   * @param namespace The namespace
+   * 
+   * @return The prefix
+   */
+  public String getPrefix(String namespace) {
+    if (namespace == null)
+      return null;
+    return this.roots.get(namespace);
   }
 
   /**

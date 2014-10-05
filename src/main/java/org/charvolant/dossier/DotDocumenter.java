@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.URI;
 
 import javax.xml.transform.Templates;
 import javax.xml.transform.TransformerFactory;
@@ -120,7 +121,7 @@ public class DotDocumenter extends Documenter {
     model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_RDFS_INF);
     model.getDocumentManager().setProcessImports(false);
     model.read(args[0]);
-    config.createNamespaceRoot(model);
+    config.createNamespaceRoot(model, Util.getBaseName(new URI(args[0])));
     config.setDisplayModel(displayModel);
     xmlGenerator = new XmlGenerator(config, model);
     generator = new DotDocumenter(config, xmlGenerator.generate());

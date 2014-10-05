@@ -5,6 +5,7 @@
   <xsl:param name="label.any" select="'any'"/>
   <xsl:param name="label.annotation" select="'annotation'"/>
   <xsl:param name="label.asymmetric" select="'asymmetric'"/>
+  <xsl:param name="label.backward-compatible-with" select="'Backward Compatible With'"/>
   <xsl:param name="label.classes" select="'Classes'"/>
   <xsl:param name="label.copyright" select="'Copyright'"/>
   <xsl:param name="label.copyright.detail" select="'Copyright notices'"/>
@@ -14,10 +15,13 @@
   <xsl:param name="label.functional" select="'functional'"/>
   <xsl:param name="label.home" select="'Home'"/>
   <xsl:param name="label.home.detail" select="'Main index'"/>
+  <xsl:param name="label.imports" select="'Imports'"/>
+  <xsl:param name="label.incompatible-with" select="'Incompatible With'"/>
   <xsl:param name="label.inverse-functional" select="'inverse functional'"/>
   <xsl:param name="label.irreflexive" select="'irreflexive'"/>
   <xsl:param name="label.metadata" select="'Metadata'"/>
   <xsl:param name="label.or" select="' or '"/>
+  <xsl:param name="label.previous-version" select="'Previous Version'"/>
   <xsl:param name="label.properties" select="'Properties'"/>
   <xsl:param name="label.range" select="'Range'"/>
   <xsl:param name="label.reflexive" select="'reflexive'"/>
@@ -26,6 +30,7 @@
   <xsl:param name="label.super-property" select="'super-property '"/>
   <xsl:param name="label.symmetric" select="'symmetric'"/>
   <xsl:param name="label.transitive" select="'transitive'"/>
+  <xsl:param name="label.version" select="'Version'"/>
   
   <xsl:template match="/">
     <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
@@ -79,11 +84,14 @@
   <a><xsl:attribute name="href"><xsl:value-of select="@uri"/></xsl:attribute><xsl:value-of select="@uri"/></a>
   </section>
   <xsl:if test="dossier:label"><section class="labels"><xsl:apply-templates select="dossier:label"></xsl:apply-templates></section></xsl:if>
-  <xsl:if test="dossier:description">
   <section class="descriptions">
   <xsl:apply-templates select="dossier:description"></xsl:apply-templates>
+  <xsl:apply-templates select="dossier:version"></xsl:apply-templates>
+  <xsl:apply-templates select="dossier:prior-version"></xsl:apply-templates>
+  <xsl:apply-templates select="dossier:backward-compatible-with"></xsl:apply-templates>
+  <xsl:apply-templates select="dossier:incompatible-with"></xsl:apply-templates>
+  <xsl:apply-templates select="dossier:imports"></xsl:apply-templates>
   </section>
-  </xsl:if>
   <xsl:if test="dossier:diagram">
   <section class="diagrams">
   <xsl:apply-templates select="dossier:diagram"></xsl:apply-templates>
@@ -193,6 +201,13 @@
   <xsl:apply-templates select="."/>
   </xsl:for-each>
   </xsl:template>
+ 
+  <xsl:template match="dossier:enumeration">
+  {<xsl:for-each select="*">
+  <xsl:if test="position() != 1">, </xsl:if>
+  <xsl:apply-templates select="."/>
+  </xsl:for-each>}
+  </xsl:template>
   
   <xsl:template match="dossier:classifier">
   <span><xsl:attribute name="class"><xsl:value-of select="text()"/>-classifier</xsl:attribute>
@@ -236,6 +251,36 @@
   <div class="description">
   <xsl:if test="@lang"><span><xsl:attribute name="class">language lang-<xsl:value-of select="@lang"/></xsl:attribute><xsl:value-of select="@lang"/></span><xsl:text> </xsl:text></xsl:if>
   <xsl:value-of select="text()"/>
+  </div>
+  </xsl:template>
+ 
+  <xsl:template match="dossier:version">
+  <div class="version">
+  <xsl:value-of select="$label.version"/> <xsl:call-template name="format-reference"/>
+  </div>
+  </xsl:template>
+
+  <xsl:template match="dossier:previous-version">
+  <div class="previous-version">
+  <xsl:value-of select="$label.previous-version"/> <xsl:call-template name="format-reference"/>
+  </div>
+  </xsl:template>
+ 
+  <xsl:template match="dossier:backward-compatible-with">
+  <div class="backward-compatible-with">
+  <xsl:value-of select="$label.backward-compatible-with"/> <xsl:call-template name="format-reference"/>
+  </div>
+  </xsl:template>
+ 
+  <xsl:template match="dossier:incompatible-with">
+  <div class="incompatible-with">
+  <xsl:value-of select="$label.incompatible-with"/> <xsl:call-template name="format-reference"/>
+  </div>
+  </xsl:template>
+ 
+  <xsl:template match="dossier:imports">
+  <div class="incompatible-with">
+  <xsl:value-of select="$label.imports"/> <xsl:call-template name="format-reference"/>
   </div>
   </xsl:template>
   

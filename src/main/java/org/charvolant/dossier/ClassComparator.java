@@ -60,6 +60,7 @@ public class ClassComparator implements Comparator<OntClass> {
   @Override
   public int compare(OntClass o1, OntClass o2) {
     int p1 = 0, p2 = 0;
+    String ln1, ln2;
     
     if (o1.hasSubClass(o2))
       return - this.reverse;
@@ -71,6 +72,8 @@ public class ClassComparator implements Comparator<OntClass> {
       p2 = this.displayModel.getProperty(o2, Dossier.priority).getInt();
     if (p1 != p2)
       return this.reverse * (p1 - p2);
-    return this.reverse * o1.getLocalName().compareTo(o2.getLocalName());
+    ln1 = o1.getLocalName() == null ? "" : o1.getLocalName();
+    ln2 = o2.getLocalName() == null ? "" : o2.getLocalName();
+    return this.reverse * ln1.compareTo(ln2);
   }
 }
