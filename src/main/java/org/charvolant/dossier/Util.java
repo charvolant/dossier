@@ -19,7 +19,9 @@ import java.util.Set;
 
 import com.google.common.io.Files;
 import com.hp.hpl.jena.ontology.OntClass;
+import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntProperty;
+import com.hp.hpl.jena.ontology.Ontology;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -124,6 +126,51 @@ public class Util {
       if (current != null) {
         used[index] = true;
         sorted.add(current);
+      }
+    } while (current != null);
+    return sorted;
+  }
+  
+  /**
+   * Perform a topological sort of ontology models into import order.
+   * 
+   *
+   * @param ontologies The list of ontology models
+    * 
+   * @return The sorted list
+   */
+  public static List<OntModel> sort(Collection<OntModel> ontologies, Configuration configuration) {
+    boolean[] used = new boolean[ontologies.size()];
+    List<Ontology> primaries = new ArrayList<Ontology>(ontologies.size());
+    List<OntModel> sorted = new ArrayList<OntModel>(ontologies.size());
+    OntologyComparator comparator = new OntologyComparator();
+    Iterator<OntModel> oi;
+    Ontology candidate, current;
+    OntModel camodel, cumodel;
+    int i, index;
+    
+    oi = ontologies.iterator();
+    while (oi.hasNext())
+      primaries.add(configuration.choosePrimaryOntology(oi.next()));
+    do {
+      current = null;
+      cumodel = null;
+      index = -1;
+      oi = ontologies.iterator();
+      for (i = 0; i < used.length; i++) {
+        camodel = oi.next();
+        candidate = primaries.get(i);
+        if (used[i])
+          continue;
+        if (current == null || comparator.compare(current, candidate) > 0) {
+          index = i;
+          current = candidate;
+          cumodel = camodel;
+        }
+      }
+      if (current != null) {
+        used[index] = true;
+        sorted.add(cumodel);
       }
     } while (current != null);
     return sorted;

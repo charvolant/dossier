@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://localhost/dot/test6#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xml:base="http://localhost/dot/test6">
+  <owl:Ontology rdf:about="">
+    <owl:incompatibleWith rdf:resource="http://localhost/dot/test6-002"/>
+    <owl:priorVersion rdf:resource="http://localhost/dot/test6-003"/>
+    <rdfs:comment>This should be a description</rdfs:comment>
+    <owl:incompatibleWith rdf:resource="http://localhost/dot/test6-001"/>
+    <owl:imports rdf:resource="http://localhost/dot/test4"/>
+    <owl:backwardCompatibleWith rdf:resource="http://localhost/dot/test6-003"/>
+    <owl:versionIRI rdf:resource="http://localhost/dot/test6-004"/>
+    <owl:imports rdf:resource="http://localhost/dot/test5"/>
+    <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Created with TopBraid Composer</owl:versionInfo>
+  </owl:Ontology>
+  <owl:Class rdf:ID="A">
+    <rdfs:label xml:lang="en">Class A</rdfs:label>
+    <rdfs:comment xml:lang="en">Test class A</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </owl:Class>
+</rdf:RDF>
+
+<!-- Created with TopBraid -->

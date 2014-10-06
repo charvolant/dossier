@@ -1,7 +1,5 @@
 package org.charvolant.dossier;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -27,6 +25,7 @@ import com.hp.hpl.jena.shared.PrefixMapping;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 import com.hp.hpl.jena.vocabulary.DC;
 import com.hp.hpl.jena.vocabulary.DCTerms;
+import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 import com.hp.hpl.jena.vocabulary.XSD;
@@ -114,7 +113,8 @@ abstract public class Generator {
     DC.creator,
     DC.date,
     DC.publisher,
-    DC.rights
+    DC.rights,
+    OWL.versionInfo
   };
 
   /** The configuration that is used to handle cross-ontology links */
@@ -441,16 +441,12 @@ abstract public class Generator {
    */
   protected String getPrefix(String ns) {
     String prefix;
-
+    
     if (ns == null)
       return null;
-    prefix = this.model.getNsURIPrefix(ns);
-    if (prefix == null) {
-      prefix = this.configuration.getPrefix(ns);
-      if (prefix != null)
-        this.model.setNsPrefix(prefix, ns);
-    }
-    return prefix;
+    if ((prefix = this.model.getNsURIPrefix(ns)) != null)
+      return prefix;
+    return this.configuration.getPrefixes().getNsURIPrefix(ns);
   }
 
   /**

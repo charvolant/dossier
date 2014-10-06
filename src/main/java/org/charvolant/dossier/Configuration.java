@@ -7,7 +7,10 @@
  */
 package org.charvolant.dossier;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -21,6 +24,7 @@ import com.hp.hpl.jena.ontology.Ontology;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.shared.PrefixMapping;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
@@ -50,6 +54,8 @@ public class Configuration {
   private BiMap<String, String> roots;
   /** The map of resource URIs onto default namespaces */ 
   private BiMap<String, String> namespaces;
+  /** The map of namespaces to prefixes */
+  private PrefixMapping prefixes;
 
   /**
    * Construct an empty configuration.
@@ -59,6 +65,7 @@ public class Configuration {
     this.roots = HashBiMap.create();
     this.namespaces = HashBiMap.create();
     this.locale = Locale.getDefault();
+    this.prefixes = null;
   }
 
   /**
@@ -147,18 +154,41 @@ public class Configuration {
   }
   
   /**
-   * Get a default prefix for a namespace, if available.
+   * Build the prefix map from a collection of ontological models.
    * <p>
-   * If this namespace has a root, then return the root as a prefix.
-   *
-   * @param namespace The namespace
+   * The prefix map is constructed from the models, using
+   * the import hierarchy as a guide.
+   * <p>
+   * For any unmapped namespaces that we know about,
+   * if the namespace has a root, then return the root as a prefix.
    * 
-   * @return The prefix
+   * @param models The models
+   *
    */
-  public String getPrefix(String namespace) {
-    if (namespace == null)
-      return null;
-    return this.roots.get(namespace);
+  public void buildPrefixMap(Collection<OntModel> models) {
+    List<OntModel> sorted = Util.sort(models, this);
+    
+    this.prefixes = PrefixMapping.Factory.create();
+    this.prefixes.setNsPrefixes(PrefixMapping.Extended);
+    for (OntModel model: sorted)
+      this.prefixes.setNsPrefixes(model.getNsPrefixMap());
+    for(Entry<String, String> entry: this.roots.entrySet())
+      if (this.prefixes.getNsURIPrefix(entry.getKey()) == null)
+        this.prefixes.setNsPrefix(entry.getValue(), entry.getKey());
+  }
+  
+  
+  /**
+   * Get the prefix mapping for all ontologies
+   * <p>
+   * The prefix map must have been intialised before calling this method.
+   * 
+   * @return The prefix mapping
+   * 
+   * @see #buildPrefixMap(Collection)
+   */
+  public PrefixMapping getPrefixes() {
+    return this.prefixes;
   }
 
   /**

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://localhost/dot/test7#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xml:base="http://localhost/dot/test7">
+  <owl:Ontology rdf:about="">
+  </owl:Ontology>
+  <owl:Class rdf:ID="A">
+    <rdfs:label xml:lang="en">Class A</rdfs:label>
+    <rdfs:comment xml:lang="en">Test class A</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </owl:Class>
+  <owl:Class rdf:ID="B">
+    <rdfs:label xml:lang="en">Class B</rdfs:label>
+    <rdfs:comment xml:lang="en">Test class B</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </owl:Class>
+ <rdf:Property rdf:ID="property1">
+    <rdfs:range>
+      <owl:Class>
+        <owl:oneOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#A"/>
+          <owl:Class rdf:about="#B"/>
+        </owl:oneOf>
+      </owl:Class>
+    </rdfs:range>
+    <rdfs:label xml:lang="en">property 1</rdfs:label>
+  </rdf:Property>
+</rdf:RDF>

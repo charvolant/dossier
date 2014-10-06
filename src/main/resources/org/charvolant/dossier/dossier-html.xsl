@@ -84,6 +84,7 @@
   <a><xsl:attribute name="href"><xsl:value-of select="@uri"/></xsl:attribute><xsl:value-of select="@uri"/></a>
   </section>
   <xsl:if test="dossier:label"><section class="labels"><xsl:apply-templates select="dossier:label"></xsl:apply-templates></section></xsl:if>
+  <xsl:if test="dossier:description or dossier:version or dossier:prior-version or dossier:backward-compatible-with or dossier:incompatible-with or dossier:imports">
   <section class="descriptions">
   <xsl:apply-templates select="dossier:description"></xsl:apply-templates>
   <xsl:apply-templates select="dossier:version"></xsl:apply-templates>
@@ -92,6 +93,7 @@
   <xsl:apply-templates select="dossier:incompatible-with"></xsl:apply-templates>
   <xsl:apply-templates select="dossier:imports"></xsl:apply-templates>
   </section>
+  </xsl:if>
   <xsl:if test="dossier:diagram">
   <section class="diagrams">
   <xsl:apply-templates select="dossier:diagram"></xsl:apply-templates>
@@ -111,12 +113,10 @@
     
   <xsl:template match="dossier:diagram">
   <div class="diagram">
-  <a><xsl:attribute name="href"><xsl:value-of select="@href"/></xsl:attribute>
-  <img>
-    <xsl:attribute name="src"><xsl:value-of select="@href"/></xsl:attribute>
-    <xsl:attribute name="alt"><xsl:value-of select="@name"/></xsl:attribute>
-  </img>
-  </a>
+  <object type="image/svg+xml">
+  <xsl:attribute name="data"><xsl:value-of select="@href"/></xsl:attribute>
+  <xsl:value-of select="@name"/>
+  </object>  
   </div>
   </xsl:template>
   
@@ -256,37 +256,55 @@
  
   <xsl:template match="dossier:version">
   <div class="version">
-  <xsl:value-of select="$label.version"/> <xsl:call-template name="format-reference"/>
+  <xsl:value-of select="$label.version"/><xsl:text disable-output-escaping="yes">&amp;nbsp;</xsl:text><xsl:call-template name="format-link"/>
   </div>
   </xsl:template>
 
   <xsl:template match="dossier:previous-version">
   <div class="previous-version">
-  <xsl:value-of select="$label.previous-version"/> <xsl:call-template name="format-reference"/>
+  <xsl:value-of select="$label.previous-version"/><xsl:text disable-output-escaping="yes">&amp;nbsp;</xsl:text><xsl:call-template name="format-link"/>
   </div>
   </xsl:template>
  
   <xsl:template match="dossier:backward-compatible-with">
   <div class="backward-compatible-with">
-  <xsl:value-of select="$label.backward-compatible-with"/> <xsl:call-template name="format-reference"/>
+  <xsl:value-of select="$label.backward-compatible-with"/><xsl:text disable-output-escaping="yes">&amp;nbsp;</xsl:text><xsl:call-template name="format-link"/>
   </div>
   </xsl:template>
  
   <xsl:template match="dossier:incompatible-with">
   <div class="incompatible-with">
-  <xsl:value-of select="$label.incompatible-with"/> <xsl:call-template name="format-reference"/>
+  <xsl:value-of select="$label.incompatible-with"/><xsl:text disable-output-escaping="yes">&amp;nbsp;</xsl:text><xsl:call-template name="format-link"/>
   </div>
   </xsl:template>
  
   <xsl:template match="dossier:imports">
-  <div class="incompatible-with">
-  <xsl:value-of select="$label.imports"/> <xsl:call-template name="format-reference"/>
+  <div class="imports">
+  <xsl:value-of select="$label.imports"/><xsl:text disable-output-escaping="yes">&amp;nbsp;</xsl:text><xsl:call-template name="format-link"/>
   </div>
   </xsl:template>
   
   <xsl:template match="dossier:class|dossier:property" mode="toc">
   <li><a><xsl:attribute name="href">#<xsl:value-of select="@id"/></xsl:attribute><xsl:value-of select="@name"/></a></li>
   </xsl:template>
+        
+  <xsl:template name="format-link">
+  <xsl:param name="source" select="."/>
+  <xsl:choose>
+  <xsl:when test="$source/@href">
+  <a><xsl:attribute name="href"><xsl:value-of select="$source/@href"/></xsl:attribute><xsl:value-of select="$source/@uri"/></a>
+  </xsl:when>
+  <xsl:when test="$source/@ref">
+  <a><xsl:attribute name="href">#<xsl:value-of select="$source/@ref"/></xsl:attribute><xsl:value-of select="$source/@uri"/></a>
+  </xsl:when>
+  <xsl:when test="$source/@uri">
+  <a><xsl:attribute name="href"><xsl:value-of select="$source/@uri"/></xsl:attribute><xsl:value-of select="$source/@uri"/></a>
+  </xsl:when>
+  <xsl:otherwise>
+  unreferenced
+  </xsl:otherwise>
+  </xsl:choose>
+  </xsl:template>  
        
   <xsl:template name="format-reference">
   <xsl:param name="source" select="."/>

@@ -118,6 +118,33 @@ public class DotDocumenterTest extends AbstractTest {
     assertEquals(this.loadResource("dot-output-5.dot"), this.trim(writer.toString()));
   }
 
+  @Test
+  public void testGenerateDot6() throws Exception {
+    StringWriter writer = new StringWriter();
+    
+    this.model = ModelFactory.createOntologyModel();
+    this.model.getDocumentManager().setProcessImports(false);
+    this.model.read(this.getClass().getResource("test6.rdf").toString());
+    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.documenter = new DotDocumenter(this.configuration, this.generator.generate());
+    this.documenter.generate(writer, Format.DOT);
+    //System.out.println(writer.toString());
+    assertEquals(this.loadResource("dot-output-6.dot"), this.trim(writer.toString()));
+  }
+
+  @Test
+  public void testGenerateDot7() throws Exception {
+    StringWriter writer = new StringWriter();
+    
+    this.model = ModelFactory.createOntologyModel();
+    this.model.read(this.getClass().getResource("test7.rdf").toString());
+    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.documenter = new DotDocumenter(this.configuration, this.generator.generate());
+    this.documenter.generate(writer, Format.DOT);
+    //System.out.println(writer.toString());
+    assertEquals(this.loadResource("dot-output-7.dot"), this.trim(writer.toString()));
+  }
+
   /**
    * Test auto dogfood consumption.
    *

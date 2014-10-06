@@ -1,0 +1,25 @@
+digraph "test6" {
+  ranksep="1.0 equally";
+  rankdir="LR";
+  concentrate=true;
+
+  
+  node 
+  [label="test6",tooltip="test6",URL="http://localhost/dot/test6",target="_top",fontname="sans-serif",fontsize="10.0"]
+  ;
+  edge 
+  [label="test6",tooltip="test6",URL="http://localhost/dot/test6",target="_top",fontname="sans-serif",fontsize="10.0"]
+  ;
+
+  subgraph main {
+  
+  label="test6";
+  tooltip="http://localhost/dot/test6";
+  bgcolor="#f0f0f8";fontname="sans-serif";fontsize="8.0";
+    "A" 
+  [label="A",tooltip="Class A",URL="http://localhost/dot/test6#A",target="_top",color="#c0d2ff",shape="box",style="rounded,filled"]
+  ;
+    
+  }
+    
+}

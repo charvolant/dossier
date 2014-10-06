@@ -117,6 +117,7 @@ public class CollectionCreator {
   public void generate(File directory) throws Exception {
     File css = new File(directory, "css");
     
+    this.configuration.buildPrefixMap(this.ontologies);
     this.logger.debug("Creating CSS in " + css);
     css.mkdirs();
     this.copyResource(css, "dossier.css", "css/dossier.css");

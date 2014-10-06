@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <ontology href="http://localhost/dot/test4" id="test4" name="test4" uri="http://localhost/dot/test4" xmlns="http://www.charvolant.org/dossier#">
+ <metadata>
+  <term term="owl:versionInfo" value="Created with TopBraid Composer"/>
+ </metadata>
  <style family="graphviz-graph">
  <attribute style="bgcolor" value="#f0f0f8"/>
  <attribute style="fontname" value="sans-serif"/>
@@ -26,6 +29,11 @@
  <attribute style="arrowhead" value="onormal"/>
  <attribute style="arrowtail" value="onormal"/>
  <attribute style="color" value="#6830d0"/>
+ </style>
+ <style family="graphviz-node-class">
+ <attribute style="color" value="#c0d2ff"/>
+ <attribute style="shape" value="box"/>
+ <attribute style="style" value="rounded,filled"/>
  </style>
  <class href="http://localhost/dot/test4#A" id="A" name="A" uri="http://localhost/dot/test4#A">
  <label lang="en">Class A</label>

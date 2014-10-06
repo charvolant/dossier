@@ -107,6 +107,20 @@ public class HtmlDocumenterTest extends AbstractTest {
     assertEquals(this.loadResource("html-output-5.html"), this.trim(writer.toString()));
   }
 
+  @Test
+  public void testgemerateHtml6() throws Exception {
+    StringWriter writer  = new StringWriter();
+
+    this.model = ModelFactory.createOntologyModel();
+    this.model.getDocumentManager().setProcessImports(false);
+    this.model.read(this.getClass().getResource("test6.rdf").toString());
+    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.documenter = new HtmlDocumenter(this.configuration, this.generator.generate());
+    this.documenter.generate(writer);
+    //System.out.println(writer.toString());
+    assertEquals(this.loadResource("html-output-6.html"), this.trim(writer.toString()));
+  }
+
   /**
    * See if we can eat our own dogfood.
    *

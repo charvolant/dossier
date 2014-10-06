@@ -118,7 +118,20 @@ digraph "<xsl:call-template name="format-name"><xsl:with-param name="source" sel
   <xsl:template match="dossier:enumeration">
   <xsl:param name="property"/>
   <xsl:param name="type"/>
-  <xsl:apply-templates select="*"><xsl:with-param name="property" select="$property"/><xsl:with-param name="type" select="$type"/></xsl:apply-templates>
+  <xsl:variable name="enumid" select="generate-id(.)"/>
+  <xsl:variable name="label">{<xsl:for-each select="*"><xsl:if test="position() != 1">, </xsl:if><xsl:value-of select="@name"/></xsl:for-each>}</xsl:variable>
+  <xsl:variable name="style" select="/dossier:ontology/dossier:style[@family='graphviz-node-class']"/>
+  "<xsl:value-of select="$enumid"/>" <!-- 
+  --><xsl:call-template name="format-attribute-list-inline">
+      <xsl:with-param name="label" select="$label"/>
+      <xsl:with-param name="tooltip" select="$label"/>
+      <xsl:with-param name="style" select="$style"/>
+    </xsl:call-template>;
+  "<xsl:value-of select="$property/@id"/>" -&gt; "<xsl:value-of select="$enumid"/>" <xsl:call-template name="format-attributes-inline">
+      <xsl:with-param name="source" select="$property"/>
+      <xsl:with-param name="family" select="'graphviz-edge-outgoing'"/>
+      <xsl:with-param name="tooltip"><xsl:value-of select="$property/@name"/><xsl:text> &#8594; </xsl:text><xsl:value-of select="$label"/></xsl:with-param>
+    </xsl:call-template>;
   </xsl:template>
        
   <xsl:template name="format-reference">
@@ -168,7 +181,7 @@ digraph "<xsl:call-template name="format-name"><xsl:with-param name="source" sel
   [<!-- 
  -->label="<xsl:value-of select="$label"/>"<!-- 
  -->,tooltip="<xsl:value-of select="$tooltip"/>"<!-- 
- --><xsl:if test="$url">,URL="<xsl:value-of select="$url"/>"</xsl:if><!-- 
+ --><xsl:if test="$url">,URL="<xsl:value-of select="$url"/>",target="_top"</xsl:if><!-- 
  --><xsl:if test="$style/@reverseHierarchy='true'">,dir="back"</xsl:if><!-- 
  --><xsl:for-each select="$style/dossier:attribute"><!-- 
    -->,<xsl:value-of select="@style"/>="<xsl:value-of select="@value"/>"<!-- 

@@ -1,0 +1,46 @@
+digraph "test7" {
+ ranksep="1.0 equally";
+ rankdir="LR";
+ concentrate=true;
+ 
+ node 
+ [label="test7",tooltip="test7",URL="http://localhost/dot/test7",target="_top",fontname="sans-serif",fontsize="10.0"]
+ ;
+ edge 
+ [label="test7",tooltip="test7",URL="http://localhost/dot/test7",target="_top",fontname="sans-serif",fontsize="10.0"]
+ ;
+ subgraph main {
+ 
+ label="test7";
+ tooltip="http://localhost/dot/test7";
+ bgcolor="#f0f0f8";fontname="sans-serif";fontsize="8.0";
+ "A" 
+ [label="A",tooltip="Class A",URL="http://localhost/dot/test7#A",target="_top",color="#c0d2ff",shape="box",style="rounded,filled"]
+ ;
+ 
+ "B" 
+ [label="B",tooltip="Class B",URL="http://localhost/dot/test7#B",target="_top",color="#c0d2ff",shape="box",style="rounded,filled"]
+ ;
+ 
+ "property1" 
+ [label="property1",tooltip="property 1",URL="http://localhost/dot/test7#property1",target="_top",color="#6830d0",shape="none"]
+ ;
+ 
+ "property1:domain" 
+ [label="any",tooltip="any",color="#a0a0a0",shape="point"]
+ 
+ 
+ "property1:domain" -> "property1" 
+ [label="",tooltip="any → property1",URL="http://localhost/dot/test7#property1",target="_top",arrowhead="none",headclip="false",color="#6830d0"]
+ ;
+ 
+ "N65705" 
+ [label="{A, B}",tooltip="{A, B}",color="#c0d2ff",shape="box",style="rounded,filled"]
+ ;
+ "property1" -> "N65705" 
+ [label="",tooltip="property1 → {A, B}",URL="http://localhost/dot/test7#property1",target="_top",arrowhead="vee",arrowtail="none",tailclip="false",color="#6830d0"]
+ ;
+  
+ }
+ 
+}

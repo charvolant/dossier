@@ -2,6 +2,7 @@ package org.charvolant.dossier;
 
 import java.net.URL;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -51,6 +52,8 @@ public class XmlGenerator extends Generator {
   public static final String FAMILY_GRAPHVIZ_NODE = "graphviz-node";
   /** The family name for anonymouys graphviz node properties: {@value} */
   public static final String FAMILY_GRAPHVIZ_NODE_ANONYMOUS = "graphviz-node-anonymous";
+  /** The family name for graphviz class properties: {@value} */
+  public static final String FAMILY_GRAPHVIZ_NODE_CLASS = "graphviz-node-class";
   /** The family name for graphviz edge properties: {@value} */
   public static final String FAMILY_GRAPHVIZ_EDGE = "graphviz-edge";
   /** The family name for graphviz incoming edge properties: {@value} */
@@ -109,6 +112,8 @@ public class XmlGenerator extends Generator {
   private Property subClassOf;
   /** The sub-property label property */
   private Property subPropertyOf;
+  /** The class label property */
+  private OntClass owlClass;
 
   /**
    * Construct an Xml Generator.
@@ -122,6 +127,7 @@ public class XmlGenerator extends Generator {
     this.altLabel = this.model.createProperty("http://www.w3.org/2004/02/skos/core#altLabel");
     this.subClassOf = this.model.createProperty(RDFS.subClassOf.getURI());
     this.subPropertyOf = this.model.createProperty(RDFS.subPropertyOf.getURI());
+    this.owlClass = this.model.createClass(OWL.Class.getURI());
     this.ids = HashBiMap.create();
   }
 
@@ -504,6 +510,8 @@ public class XmlGenerator extends Generator {
         ontology.appendChild(style);
       if ((style = this.generateStyle(document, this.subPropertyOf, this.FAMILY_GRAPHVIZ_EDGE_SUPER_PROPERTY)) != null)
         ontology.appendChild(style);
+      if ((style = this.generateStyle(document, this.owlClass, this.FAMILY_GRAPHVIZ_NODE_CLASS)) != null)
+        ontology.appendChild(style);
     }
     this.addReferenceURIs(document, ontology, "version", this.primary, false, OWL.versionInfo);
     this.addReferenceURIs(document, ontology, "prior-version", this.primary, false, OWL.priorVersion);
@@ -582,6 +590,8 @@ public class XmlGenerator extends Generator {
     Element ontology, subo;
     Ontology sub;
 
+    if (this.configuration.getPrefixes() == null) // If not already done
+      this.configuration.buildPrefixMap(Collections.singleton(this.model));
     builderFactory.setNamespaceAware(true);
     builder = builderFactory.newDocumentBuilder();
     document = builder.newDocument();
