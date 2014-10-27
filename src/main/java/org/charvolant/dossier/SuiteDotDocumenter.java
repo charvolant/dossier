@@ -8,12 +8,9 @@
 package org.charvolant.dossier;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.net.URI;
 
 import javax.xml.transform.Templates;
 import javax.xml.transform.TransformerFactory;
@@ -21,15 +18,11 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Document;
 
-import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.ontology.OntModelSpec;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-
 /**
- * Generate an graphviz DOT description describing an ontology.
+ * Generate an graphviz DOT description describing the relationship
+ * between ontologies.
  * <p>
- * This uses a {@link OntologyGenerator} to generate an internal description
+ * This uses a {@link SuiteGenerator} to generate an internal description
  * and then a transform to generate documentation.
  * 
  * @see http://www.graphviz.org
@@ -37,7 +30,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
  * @author Doug Palmer <doug@charvolant.org>
  *
  */
-public class DotDocumenter extends Documenter {
+public class SuiteDotDocumenter extends Documenter {
   /** The standard template for transformation */
   private static Templates XSLT;
   
@@ -46,7 +39,7 @@ public class DotDocumenter extends Documenter {
     
     XSLT = factory.newTemplates(
         new StreamSource(
-            DotDocumenter.class.getResourceAsStream("dossier-dot.xsl")
+            SuiteDotDocumenter.class.getResourceAsStream("dossier-suite-dot.xsl")
         )
     );
   }
@@ -60,7 +53,7 @@ public class DotDocumenter extends Documenter {
    * 
    * @throws Exception if unable to construct the generator or transformer
    */
-  public DotDocumenter(Configuration configuration, Document document) throws Exception {
+  public SuiteDotDocumenter(Configuration configuration, Document document) throws Exception {
     super(configuration, document);    
   }
   
@@ -98,35 +91,4 @@ public class DotDocumenter extends Documenter {
       reader.close();
     }
   }
-    
-  /**
-   * Run for a specific ontology.
-   * <p>
-   * Takes a single argument, the ontology URL
-   *
-   * @param args The arguments
-   */
-  public static void main(String[] args) throws Exception {
-    OntModel model;
-    Model displayModel;
-    DotDocumenter generator;
-    OntologyGenerator ontologyGenerator;
-    File out = new File(args[1]);
-    FileWriter ow = new FileWriter(out);
-    Configuration config = new Configuration();
-
-    displayModel = ModelFactory.createDefaultModel();
-    displayModel.read(HtmlDocumenter.class.getResource("dossier.rdf").toString());
-    displayModel.read(HtmlDocumenter.class.getResource("standard.rdf").toString());    
-    model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_RDFS_INF);
-    model.getDocumentManager().setProcessImports(false);
-    model.read(args[0]);
-    config.createNamespaceRoot(model, Util.getBaseName(new URI(args[0])));
-    config.setDisplayModel(displayModel);
-    ontologyGenerator = new OntologyGenerator(config, model);
-    generator = new DotDocumenter(config, ontologyGenerator.generate());
-    generator.generate(ow, Format.SVG);
-    ow.close();
-  }
-
 }

@@ -116,6 +116,9 @@ public class CollectionCreator {
    */
   public void generate(File directory) throws Exception {
     File css = new File(directory, "css");
+    Document document;
+    Writer writer;
+    XmlDocumenter xmlDoc;
     
     this.configuration.buildPrefixMap(this.ontologies);
     this.logger.debug("Creating CSS in " + css);
@@ -123,15 +126,15 @@ public class CollectionCreator {
     this.copyResource(css, "dossier.css", "css/dossier.css");
     this.copyResource(css, "flags.png", "css/flags.png");
     for (OntModel ontology: this.ontologies) {
-      XmlGenerator generator = new XmlGenerator(this.configuration, ontology);
+      OntologyGenerator generator = new OntologyGenerator(this.configuration, ontology);
       Ontology ont = generator.getPrimary();
       this.logger.debug("Generating for " + ont.getURI());
-      Document document = generator.generate();
+      document = generator.generate();
       File html = new File(directory, this.configuration.getHtmlFile(ont));
       File svg = new File(directory, this.configuration.getDiagramFile(ont));
+      File xml = new File(directory, this.configuration.getXmlFile(ont));
       HtmlDocumenter htmlDoc = new HtmlDocumenter(this.configuration, document);
       DotDocumenter dotDoc = new DotDocumenter(this.configuration, document);
-      Writer writer;
       
       writer = new FileWriter(html);
       htmlDoc.generate(writer);
@@ -140,7 +143,29 @@ public class CollectionCreator {
       writer = new FileWriter(svg);
       dotDoc.generate(writer, Format.SVG);
       writer.close();
+      
+      xmlDoc = new XmlDocumenter(this.configuration, document);
+      writer = new FileWriter(xml);
+      xmlDoc.generate(writer);
+      writer.close();      
     }
+    SuiteGenerator suite = new SuiteGenerator(this.configuration, this.ontologies);
+    document = suite.generate();
+    SuiteDocumenter suiteDoc = new SuiteDocumenter(this.configuration, document);
+    SuiteDotDocumenter suiteDotDoc = new SuiteDotDocumenter(this.configuration, document);
+    xmlDoc = new XmlDocumenter(this.configuration, document);
+    File index = new File(directory, "index.html");
+    writer = new FileWriter(index);
+    suiteDoc.generate(writer);
+    writer.close();
+    index = new File(directory, "index.svg");
+    writer = new FileWriter(index);
+    suiteDotDoc.generate(writer, Format.SVG);
+    writer.close();
+    index = new File(directory, "index.xml");
+    writer = new FileWriter(index);
+    xmlDoc.generate(writer);
+    writer.close();
   }
   
   

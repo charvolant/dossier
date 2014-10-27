@@ -72,16 +72,21 @@ the classes and properties contained within the ontology.
       <artifactId>guava</artifactId>
       <version>18.0</version>
     </dependency>
+     <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <version>${maven.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency> <!-- Emperor knows why I need this here -->
+      <groupId>backport-util-concurrent</groupId>
+      <artifactId>backport-util-concurrent</artifactId>
+      <version>3.1</version>
+    </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-project</artifactId>
       <version>2.2.1</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-plugin-api</artifactId>
-      <version>${maven.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -170,13 +175,13 @@ the classes and properties contained within the ontology.
         <configuration>
           <includes>
             <include>src/main/resources/org/charvolant/dossier/dossier.rdf</include>
+            <include>src/main/resources/org/charvolant/dossier/skos.rdf</include>
           </includes>
           <fileOptions>
             <source>
               <input>default</input>
               <output>${project.build.directory}/generated-sources/java</output>
               <package-name>org.charvolant.dossier.vocabulary</package-name>
-              <className>Dossier</className>
               <ontology>true</ontology>
               <lang-owl>true</lang-owl>
             </source>
@@ -253,7 +258,7 @@ the classes and properties contained within the ontology.
               <report>issue-tracking</report>
               <report>license</report>
               <report>scm</report>
-              <report>dependencies</report>
+<!--               <report>dependencies</report> -->
             </reports>
           </reportSet>
         </reportSets>
@@ -314,7 +319,7 @@ the classes and properties contained within the ontology.
                 </includes>
               </ontologies>
             </configuration>
-           <executions>
+            <executions>
               <execution>
                 <goals>
                   <goal>document</goal>
@@ -322,7 +327,7 @@ the classes and properties contained within the ontology.
                 <phase>site</phase>
               </execution>
             </executions>
-           </plugin>
+          </plugin>
         </plugins>
       </build>
     </profile>

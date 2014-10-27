@@ -194,7 +194,11 @@ public class Configuration {
   /**
    * Choose the primary ontology from a model.
    * <p>
-   * By default, this is the ontology not imported.
+   * Preferentially, this is the ontology that has a URI that matches the default namespace
+   * (possibly without a trailing "#" or "/")
+   * Otherwise, by default, this is the ontology not imported.
+   * 
+   * TODO I'm sick of guessing. Next job is to make this explicit
    * 
    * @param model The ontology model
    * 
@@ -203,12 +207,17 @@ public class Configuration {
   public Ontology choosePrimaryOntology(OntModel model) {
     ExtendedIterator<Ontology> oi = model.listOntologies();
     Ontology primary = null, candidate;
-
+    String base = model.getNsPrefixURI("");
+    String guess = base != null && (base.endsWith("#") || base.endsWith("/")) ? base.substring(0, base.length() - 1) : base;
+    
     while (oi.hasNext()) {
       candidate = oi.next();
+      
       if (primary == null)
         primary = candidate;
       else if (candidate.imports(primary))
+        primary = candidate;
+      else if (candidate.getURI().equals(base) || candidate.getURI().equals(guess))
         primary = candidate;
       else if (this.STRUCTURE_URIS.contains(primary.getURI()))
         primary = candidate;
@@ -243,6 +252,20 @@ public class Configuration {
     return root == null ? null : root + ".svg";
   }
 
+
+
+  /**
+   * Get the XML file name for a resource.
+   *
+   * @param resource The resource
+   * 
+   * @return The location of the XML file where the resource resides
+   */
+  public String getXmlFile(Resource resource) {
+    String root = this.getNamespaceRoot(resource);
+
+    return root == null ? null : root + ".xml";
+  }
 
 
 }

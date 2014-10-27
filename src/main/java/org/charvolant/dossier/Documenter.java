@@ -90,19 +90,33 @@ public abstract class Documenter {
     this.transform(transformer, result);
     return result.getNode().getOwnerDocument();
   }
+  /**
+   * Transform this document for output.
+   *
+   * @param transformer The transformer
+   * @param writer What to write to
+   * 
+   * @throws TransformerException
+   */
+  protected void transform(Transformer transformer, Writer writer) throws TransformerException {
+    StreamResult result = new StreamResult(writer);
+    
+    this.transform(transformer, result);
+  }
 
   /**
    * Transform this document for output.
    *
    * @param template The transformation template
-   * @return
+   * @param writer What to write to
+   * 
    * @throws TransformerException
    */
   protected void transform(Templates template, Writer writer) throws TransformerException {
     Transformer transformer = template.newTransformer();
-    StreamResult result = new StreamResult(writer);
     
-    this.transform(transformer, result);
+    this.transform(transformer, writer);
   }
-  
+
+
 }

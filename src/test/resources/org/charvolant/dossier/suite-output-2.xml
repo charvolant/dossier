@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ontologies xmlns="http://www.charvolant.org/dossier#">
+ <ontology href="http://localhost/dot/test1" id="test1" name="test1" uri="http://localhost/dot/test1">
+ <metadata>
+ <term term="owl:versionInfo" value="Created with TopBraid Composer"/>
+ </metadata>
+ </ontology>
+ <ontology href="http://localhost/dot/test2" id="test2" name="test2" uri="http://localhost/dot/test2">
+ <metadata>
+ <term term="owl:versionInfo" value="Created with TopBraid Composer"/>
+ </metadata>
+ </ontology>
+</ontologies>

@@ -34,7 +34,7 @@ public class DotDocumenterTest extends AbstractTest {
   /** The combined model */
   private OntModel model;
   /** The XML generator */
-  private XmlGenerator generator;
+  private OntologyGenerator generator;
   /** The display preferences */
   private DotDocumenter documenter;
   
@@ -59,7 +59,7 @@ public class DotDocumenterTest extends AbstractTest {
     
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test1.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new DotDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer, Format.DOT);
     //System.out.println(writer.toString());
@@ -72,7 +72,7 @@ public class DotDocumenterTest extends AbstractTest {
     
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test2.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new DotDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer, Format.DOT);
     //System.out.println(writer.toString());
@@ -85,7 +85,7 @@ public class DotDocumenterTest extends AbstractTest {
     
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test3.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new DotDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer, Format.DOT);
     //System.out.println(writer.toString());
@@ -98,7 +98,7 @@ public class DotDocumenterTest extends AbstractTest {
     
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test4.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new DotDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer, Format.DOT);
     //System.out.println(writer.toString());
@@ -111,7 +111,7 @@ public class DotDocumenterTest extends AbstractTest {
     
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test5.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new DotDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer, Format.DOT);
     //System.out.println(writer.toString());
@@ -125,7 +125,7 @@ public class DotDocumenterTest extends AbstractTest {
     this.model = ModelFactory.createOntologyModel();
     this.model.getDocumentManager().setProcessImports(false);
     this.model.read(this.getClass().getResource("test6.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new DotDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer, Format.DOT);
     //System.out.println(writer.toString());
@@ -138,7 +138,7 @@ public class DotDocumenterTest extends AbstractTest {
     
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test7.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new DotDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer, Format.DOT);
     //System.out.println(writer.toString());
@@ -156,7 +156,7 @@ public class DotDocumenterTest extends AbstractTest {
     
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("dossier.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new DotDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer, Format.DOT);
     //System.out.println(writer.toString());

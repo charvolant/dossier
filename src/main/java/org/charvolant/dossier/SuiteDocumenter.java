@@ -11,8 +11,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.transform.Templates;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
@@ -24,41 +27,39 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 /**
- * Generate an HTML document describing an ontology.
- * <p>
- * This uses a {@link OntologyGenerator} to generate an internal description
- * and then a transform to generate documentation.
+ * Generate documentation for a suite of ontologies.
  *
  * @author Doug Palmer <doug@charvolant.org>
  *
  */
-public class HtmlDocumenter extends Documenter {
+public class SuiteDocumenter extends Documenter {
   /** The standard template for transformation */
   private static Templates XSLT;
-  
+
   {
     TransformerFactory factory = TransformerFactory.newInstance();
-    
-    XSLT = factory.newTemplates(
-        new StreamSource(
-            HtmlDocumenter.class.getResourceAsStream("dossier-html.xsl")
-        )
-    );
+
+    try {
+      XSLT = factory.newTemplates(
+          new StreamSource(
+              SuiteDocumenter.class.getResourceAsStream("dossier-suite-html.xsl")
+              )
+          );
+    } catch (TransformerConfigurationException ex) {
+      throw new IllegalStateException(ex);
+    }
   }
-  
+
   /**
-   * Construct a generator for an ontology.
+   * Construct a suite documenter.
    *
-   * @param configuration The doumenter configuration
-   * @param document The document describing the ontology
-   * 
-   * @throws Exception if unable to construct the generator or transformer
+   * @param configuration The suite configuration
+   * @param document The document to generate from
    */
-  public HtmlDocumenter(Configuration configuration, Document document) throws Exception {
-    super(configuration, document);    
+  public SuiteDocumenter(Configuration configuration, Document document) {
+    super(configuration, document);
   }
-  
-  
+
   /**
    * Generate an HTML document and write it out.
    * 
@@ -78,25 +79,29 @@ public class HtmlDocumenter extends Documenter {
    * @param args The arguments
    */
   public static void main(String[] args) throws Exception {
+    List<OntModel> models = new ArrayList<OntModel>();
     OntModel model;
     Model displayModel;
-    HtmlDocumenter generator;
-    OntologyGenerator ontologyGenerator;
-    File out = new File(args[1]);
+    SuiteDocumenter documenter;
+    SuiteGenerator generator;
+    File out = new File(args[args.length - 1]);
     FileWriter ow = new FileWriter(out);
     Configuration config = new Configuration();
 
     displayModel = ModelFactory.createDefaultModel();
     displayModel.read(HtmlDocumenter.class.getResource("dossier.rdf").toString());
     displayModel.read(HtmlDocumenter.class.getResource("standard.rdf").toString());    
-    model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_RDFS_INF);
-    model.getDocumentManager().setProcessImports(false);
-    model.read(args[0]);
-    config.createNamespaceRoot(model, Util.getBaseName(new URI(args[0])));
+    for (int i = 0; i < args.length - 1; i++) {
+      model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_RDFS_INF);
+      model.getDocumentManager().setProcessImports(false);
+      model.read(args[i]);
+      config.createNamespaceRoot(model, Util.getBaseName(new URI(args[i])));
+      models.add(model);
+    }
     config.setDisplayModel(displayModel);
-    ontologyGenerator = new OntologyGenerator(config, model);
-    generator = new HtmlDocumenter(config, ontologyGenerator.generate());
-    generator.generate(ow);
+    generator = new SuiteGenerator(config, models);
+    documenter = new SuiteDocumenter(config, generator.generate());
+    documenter.generate(ow);
     ow.close();
   }
 

@@ -32,11 +32,11 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
  * @author Doug Palmer <doug@charvolant.org>
  *
  */
-public class XmlGeneratorTest extends AbstractTest {
+public class OntologyGeneratorTest extends AbstractTest {
   private Configuration configuration;
   private OntModel model;
   private Model dossier;
-  private XmlGenerator generator;
+  private OntologyGenerator generator;
 
   private String convertDom(Document doc) throws Exception {
     Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -64,7 +64,7 @@ public class XmlGeneratorTest extends AbstractTest {
 
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test1.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     document = this.generator.generate();
     assertEquals(this.loadResource("xml-output-1.xml"), this.convertDom(document));
     //System.out.println(this.convertDom(document));
@@ -76,7 +76,7 @@ public class XmlGeneratorTest extends AbstractTest {
 
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test2.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     document = this.generator.generate();
     //System.out.println(this.convertDom(document));
     assertEquals(this.loadResource("xml-output-2.xml"), this.convertDom(document));
@@ -88,7 +88,7 @@ public class XmlGeneratorTest extends AbstractTest {
 
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test3.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     document = this.generator.generate();
     //System.out.println(this.convertDom(document));
     assertEquals(this.loadResource("xml-output-3.xml"), this.convertDom(document));
@@ -100,7 +100,7 @@ public class XmlGeneratorTest extends AbstractTest {
 
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test4.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     document = this.generator.generate();
     //System.out.println(this.convertDom(document));
     assertEquals(this.loadResource("xml-output-4.xml"), this.convertDom(document));
@@ -112,7 +112,7 @@ public class XmlGeneratorTest extends AbstractTest {
 
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test5.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     document = this.generator.generate();
     assertEquals(this.loadResource("xml-output-5.xml"), this.convertDom(document));
     //System.out.println(this.convertDom(document));
@@ -130,7 +130,7 @@ public class XmlGeneratorTest extends AbstractTest {
 
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("dossier.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     document = this.generator.generate();
     //System.out.println(this.convertDom(document));
   }

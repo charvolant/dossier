@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ontologies xmlns="http://www.charvolant.org/dossier#">
+ <ontology href="http://localhost/dot/test6" id="test6" name="test6" uri="http://localhost/dot/test6">
+ <description>This should be a description</description>
+ <metadata>
+ <term term="owl:versionInfo" value="Created with TopBraid Composer"/>
+ </metadata>
+ <prior-version href="http://localhost/dot/test6-003" name="test6-003" uri="http://localhost/dot/test6-003"/>
+ <backward-compatible-with href="http://localhost/dot/test6-003" name="test6-003" uri="http://localhost/dot/test6-003"/>
+ <incompatible-with href="http://localhost/dot/test6-002" name="test6-002" uri="http://localhost/dot/test6-002"/>
+ <incompatible-with href="http://localhost/dot/test6-001" name="test6-001" uri="http://localhost/dot/test6-001"/>
+ <imports href="http://localhost/dot/test4" name="test4" uri="http://localhost/dot/test4"/>
+ <imports href="http://localhost/dot/test5" name="test5" uri="http://localhost/dot/test5"/>
+ </ontology>
+ <ontology href="http://localhost/dot/test5" id="test5" name="test5" uri="http://localhost/dot/test5">
+ <metadata>
+ <term term="owl:versionInfo" value="Created with TopBraid Composer"/>
+ </metadata>
+ </ontology>
+</ontologies>

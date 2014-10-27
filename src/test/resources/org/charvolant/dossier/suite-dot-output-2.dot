@@ -1,0 +1,11 @@
+digraph "index" {
+  
+    "test1" 
+  [label="test1",tooltip="test1",URL="http://localhost/dot/test1",target="_top",color="#c0d2ff",shape="box",style="rounded,filled"]
+  ;
+    
+    "test2" 
+  [label="test2",tooltip="test2",URL="http://localhost/dot/test2",target="_top",color="#c0d2ff",shape="box",style="rounded,filled"]
+  ;
+    
+}

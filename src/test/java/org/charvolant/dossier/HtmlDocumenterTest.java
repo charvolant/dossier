@@ -29,7 +29,7 @@ public class HtmlDocumenterTest extends AbstractTest {
   private Model dossier;
   private Configuration configuration;
   private OntModel model;
-  private XmlGenerator generator;
+  private OntologyGenerator generator;
   private HtmlDocumenter documenter;
   
   @Before
@@ -48,7 +48,7 @@ public class HtmlDocumenterTest extends AbstractTest {
 
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test1.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new HtmlDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer);
     //System.out.println(writer.toString());
@@ -61,7 +61,7 @@ public class HtmlDocumenterTest extends AbstractTest {
 
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test2.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new HtmlDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer);
     //System.out.println(writer.toString());
@@ -74,7 +74,7 @@ public class HtmlDocumenterTest extends AbstractTest {
 
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test3.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new HtmlDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer);
     //System.out.println(writer.toString());
@@ -87,7 +87,7 @@ public class HtmlDocumenterTest extends AbstractTest {
 
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test4.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new HtmlDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer);
     //System.out.println(writer.toString());
@@ -100,7 +100,7 @@ public class HtmlDocumenterTest extends AbstractTest {
 
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("test5.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new HtmlDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer);
     //System.out.println(writer.toString());
@@ -114,7 +114,7 @@ public class HtmlDocumenterTest extends AbstractTest {
     this.model = ModelFactory.createOntologyModel();
     this.model.getDocumentManager().setProcessImports(false);
     this.model.read(this.getClass().getResource("test6.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new HtmlDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer);
     //System.out.println(writer.toString());
@@ -132,7 +132,7 @@ public class HtmlDocumenterTest extends AbstractTest {
 
     this.model = ModelFactory.createOntologyModel();
     this.model.read(this.getClass().getResource("dossier.rdf").toString());
-    this.generator = new XmlGenerator(this.configuration, this.model);
+    this.generator = new OntologyGenerator(this.configuration, this.model);
     this.documenter = new HtmlDocumenter(this.configuration, this.generator.generate());
     this.documenter.generate(writer);
     //System.out.println(writer.toString());
